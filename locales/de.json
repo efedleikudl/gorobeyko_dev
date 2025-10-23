@@ -1,0 +1,219 @@
+{
+  "nav": {
+    "intro": "Einführung",
+    "experience": "Erfahrung",
+    "education": "Ausbildung",
+    "skills": "Kompetenzen",
+    "projects": "Projekte",
+    "publications": "Veröffentlichungen",
+    "connect": "Kontakt"
+  },
+  "hero": {
+    "subtitle": "PORTFOLIO",
+    "name": "Borys",
+    "surname": "Gorobeyko",
+    "title": "Informatiker & KI-Spezialist",
+    "description": "Ich entwickle Lösungen, die Systeme integrieren, Daten nutzbar machen und KI produktiv einsetzen.",
+    "availability": "Verfügbar für Arbeit",
+    "location": "Coburg, Deutschland",
+    "currently": "VORHERIGE STELLE",
+    "currentRole": "Werkstudent IT Service Management",
+    "currentCompany": "@ Noris Network AG",
+    "currentPeriod": "11/2024 — 10/2025",
+    "focus": "SCHWERPUNKT",
+    "focusSkills": [ "Python", "Java", "MLOps", "LLM", "React", "SQL"]
+  },
+  "about": {
+    "title": "Über mich",
+    "content": "Ich bin Informatikabsolvent und Entwickler mit Fokus auf KI-gestützte Lösungen, Frontend und Backend-Entwicklung. Mir macht es Spaß, komplexe Probleme pragmatisch zu lösen, Dinge sauber zu bauen und Wissen direkt in funktionierende Produkte zu verwandeln. Ich liebe, was ich mache, und bleibe neugierig — deshalb lerne ich kontinuierlich Neues und experimentiere mit modernen Tools und Methoden."
+  },
+  "experience": {
+    "title": "Berufserfahrung",
+    "period": "2022 — 2025",
+    "jobs": [
+      {
+        "period": "11/2024 – 10/2025",
+        "role": "Werkstudent IT Service Management",
+        "company": "Noris Network AG",
+        "location": "Nürnberg, Deutschland",
+        "description": "Entwicklung von KI-gestützten Lösungen für IT-Service-Management",
+        "achievements": [
+          "Entwickelte eine DSGVO-konforme Pseudonymisierungspipeline für ServiceNow-CSV-Exporte mit deterministischer Seed-Initialisierung und Parallelisierung (Multiprocessing) und sicherte die tabellenübergreifende referenzielle Integrität",
+          "Entwickelte einen LLM-Evaluator mit Composite Quality Index (CQI) und NLI-Prüfungen zum Benchmarking der Now-Assist-Antworten",
+          "Konzipierte Prompts, Guardrails und Monitoring für Now Assist (GenAI) im ITSM"
+        ]
+      },
+      {
+        "period": "09/2022 – 02/2023",
+        "role": "Praktikant Softwareentwickler",
+        "company": "Antonov Logistics SALIS GmbH",
+        "location": "Leipzig, Deutschland",
+        "description": "Entwicklung interner Authentifizierungssysteme",
+        "achievements": [
+          "Standardisierte die interne Authentifizierung durch Ersatz von Drittanbieter-Tools mit einem eigenentwickelten LDAP-Client in C#",
+          "Stellte eine REST-/CLI-Schnittstelle für Service-Integrationen bereit"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "title": "Ausbildung",
+    "items": [
+      {
+        "period": "2020 – 2025",
+        "degree": "B. Sc. Informatik",
+        "institution": "Hochschule für angewandte Wissenschaften Coburg",
+        "location": "Coburg, Deutschland",
+        "thesis": "Bachelorarbeit: Datenschutzkonforme ITSM-Prozess-Unterstützung durch generative und agentenbasierte KI auf Basis der ServiceNow Plattform"
+      },
+      {
+        "period": "2019 – 2020",
+        "degree": "Technischer Abitur Abschluss",
+        "institution": "Studienkolleg Coburg",
+        "location": "Coburg, Deutschland"
+      }
+    ]
+  },
+  "skills": {
+    "title": "Kompetenzen",
+    "items": [
+      {
+        "name": "Python",
+        "description": "Datenpipelines mit pandas, CLI-Tools, asynchrone Jobs, ML-/NLP-Workflows mit Hugging Face Transformers und PyTorch, NumPy"
+      },
+      {
+        "name": "Softwaremodellierung und -architektur",
+        "description": "UML-, Sequenz- und ER-Diagramme, Architekturstile, API-Design, modulare Services, Prototyping, Anforderungsanalyse und -zerlegung"
+      },
+      {
+        "name": "SQL",
+        "description": "Schema-Design, Mehrtabellen-Joins, Fensterfunktionen, Indexierung und Grundlagen von Abfrageplänen, PostgreSQL, MySQL"
+      },
+      {
+        "name": "DevOps",
+        "description": "Git, GitHub und GitLab, CI-Grundlagen, Docker, Kubernetes-Grundlagen, MLOps-Grundlagen, Linux, Scripting"
+      },
+      {
+        "name": "Amazon Web Services",
+        "description": "Cloud-Grundlagen in Provisionierung, Netzwerken, Zugriffskontrolle, einfachen Deployments und Monitoring"
+      },
+      {
+        "name": "C++",
+        "description": "Praxiskenntnisse im Tooling und in der Prototypenentwicklung"
+      },
+      {
+        "name": "LLM Fine-Tuning",
+        "description": "Datensatzkuratierung und -bereinigung, Instruction-Tuning mit Hugging Face Transformers und PEFT/LoRA/QLoRA, Prompt-Vorlagen und Tokenisierung, Trainings-/Validierungspipelines"
+      },
+      {
+        "name": "Java",
+        "description": "OOP, REST-Backends, Spring-Grundlagen, Unit-Tests"
+      },
+      {
+        "name": "ServiceNow",
+        "description": "Workflows, Flow Designer und IntegrationHub, Business Rules und Script Includes, Servicekatalog, REST-Integrationen, Integration von Now Assist (GenAI)"
+      },
+      {
+        "name": "React (+ TypeScript)",
+        "description": "Vite-Apps, Komponentendesign, Tailwind CSS/shadcn/ui, responsive Layouts, API-Integration"
+      },
+      {
+        "name": "C#",
+        "description": "Praxiskenntnisse in .NET-Konsolentools und -Utilities"
+      }
+    ]
+  },
+  "projects": {
+    "title": "Projekte",
+    "items": [
+      {
+        "name": "ServiceNow-Datenanonymisierungstool",
+        "company": "Noris Network",
+        "github": "https://github.com/efedleikudl/sn_anonymizer",
+        "description": "DSGVO-konforme Testdaten bereitgestellt, gemessen an fehlerfreien ServiceNow-Importen bei erhaltener referenzieller Integrität, durch modularen Python-Anonymisierer mit deterministischem Seeding und Multiprozess-Pipelines.",
+        "achievements": [
+          "Volle PII-Abdeckung, messbar an präzisem Maskieren von Namen, E-Mails, Telefonnummern, Adressen und Firmen auch im Freitext, durch Kombination aus Regex und NLP",
+          "Reproduzierbarkeit gesichert, gemessen an konsistenten Wiederhol-Läufen und Validierungen, durch Seed-basierte Anonymisierung und robuste Export-Workflows",
+          "Ergebnis: DSGVO-konforme Testdatengenerierung für Entwicklungs- und Testumgebungen ermöglicht, bei erhaltener referenzieller Integrität und Datenstruktur"
+        ],
+        "tech": ["Python", "pandas", "NLP", "Multithreading", "CSV", "ServiceNow"]
+      },
+      {
+        "name": "Evaluator für Now Assist",
+        "company": "Noris Network",
+        "github": "https://github.com/efedleikudl/nowassist_evaluator",
+        "description": "KI-Antwortqualität standardisiert, gemessen über einen vertrauensgradbasierten Composite Quality Index, durch Aufbau eines vierstufigen Evaluators auf semantischer, pragmatischer, lexikalischer und struktureller Ebene.",
+        "achievements": [
+          "Analysefähigkeit erhöht, messbar an CSV-Exports pro Stufe und Gesamt-Score, durch stabile Exportmodule",
+          "Durchsatz skaliert, gemessen an effizienter NLI-Verarbeitung und besserer GPU-Auslastung, durch Integration von Transformers mit Batching und Lazy Loading",
+          "Ergebnis: Unternehmensspezifische KI-Integration beschleunigt, messbar an kürzeren Integrationszyklen und weniger Nacharbeit, durch aufgaben-gewichtete Scores, Prompts und Guardrails für Now Assist im ITSM"
+        ],
+        "tech": ["Anforderungsanalyse", "Python", "NowAssist", "NLI", "LLM", "Hugging Face"]
+      },
+      {
+        "name": "Sparrow LDAP Client",
+        "company": "Antonov Logistics",
+        "description": "Interne Authentifizierung standardisiert, gemessen an der vollständigen Ablösung von Drittanbieter-Tools, durch Entwicklung eines eigenständigen LDAP-Clients in C# mit Bind/Search/Add/Modify/Delete und Desktop-GUI.",
+        "achievements": [
+          "Onboarding-Aufwand reduziert, messbar an schnelleren Massenaktualisierungen, durch LDIF/CSV-Import-/Export und visuellen GUI",
+          "Provisionierung automatisiert, gemessen an stabilen Integrationen in Services, durch bereitgestellte REST- und CLI-Schnittstellen",
+          "Ergebnis: Standardisierter LDAP-Zugriff über alle Teams und Eliminierung der Abhängigkeit von Drittanbieter-Tools"
+        ],
+        "tech": ["C#", ".NET", "LDAP", "REST API", "CLI", "Linux"]
+      }
+    ]
+  },
+  "publications": {
+    "title": "Veröffentlichungen",
+    "items": [
+      {
+        "authors": "Lurin, I., Gorobeiko, M., Sokol, Y., Usenko, O., Khoroshun, E., Makarov, V., Nehoduiko, V., Gumeniuk, K., Gorobeyko, B., & Dinets, A.",
+        "year": "2024",
+        "title": "A review of the artificial intelligence application as a guideline tool for the wound management",
+        "journal": "EMERGENCY MEDICINE, 20(5), 417–422",
+        "doi": "https://doi.org/10.22141/2224-0586.20.5.2024.1742"
+      },
+      {
+        "authors": "Lurin I, Gorobeiko M, Lovin A, Gorobeyko B, Lovina N, Dinets A",
+        "year": "2024",
+        "title": "APPLICATION OF ARTIFICIAL INTELLIGENCE IN CIVIL AND MILITARY MEDICINE",
+        "journal": "Georgian Med News. 2024 Mar;(348):94-98",
+        "pmid": "38807400"
+      }
+    ]
+  },
+  "conferences": {
+    "title": "Konferenzen",
+    "items": [
+      {
+        "date": "09/2025",
+        "name": "GI VR/AR Workshop — Vortrag",
+        "location": "TU Chemnitz, Chemnitz",
+        "presentation": "Roman Kobets, Borys Gorobeyko and Jens Grubert: \"Gazing into the Past: An Immersive Gallery of Historical Images via Camera-Guided Video Diffusion and Gaussian Splats\""
+      },
+      {
+        "date": "2023",
+        "name": "Zech Sicherheitstechnik - Innovation Day — Teilnehmer",
+        "location": "Leipzig"
+      }
+    ]
+  },
+  "languages": {
+    "title": "Sprachkenntnisse",
+    "items": [
+      { "name": "Deutsch", "level": "C1" },
+      { "name": "Englisch", "level": "C1" },
+      { "name": "Ukrainisch", "level": "Muttersprache" },
+      { "name": "Russisch", "level": "Muttersprache" }
+    ]
+  },
+  "contact": {
+    "title": "Kontakt aufnehmen",
+    "description": "Immer interessiert an neuen Möglichkeiten, Kooperationen und Gesprächen über Technologie und Innovation.",
+    "elsewhere": "Oder finden Sie mich hier:"
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten",
+    "builtWith": "Erstellt mit viel Kaffee"
+  }
+}

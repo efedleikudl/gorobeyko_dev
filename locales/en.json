@@ -1,0 +1,219 @@
+{
+  "nav": {
+    "intro": "Introduction",
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "projects": "Projects",
+    "publications": "Publications",
+    "connect": "Contact"
+  },
+  "hero": {
+    "subtitle": "PORTFOLIO",
+    "name": "Borys",
+    "surname": "Gorobeyko",
+    "title": "Computer Scientist & AI Specialist",
+    "description": "Developing goal-oriented and solution-focused software at the intersection of **artificial intelligence**, **data processing**, and **IT service management**.",
+    "availability": "Available for work",
+    "location": "Coburg, Germany",
+    "currently": "CURRENTLY",
+    "currentRole": "Working Student IT Service Management",
+    "currentCompany": "@ Noris Network AG",
+    "currentPeriod": "11/2024 — 10/2025",
+    "focus": "FOCUS",
+    "focusSkills": ["Python", "ServiceNow", "LLM", "NLP", "DevOps"]
+  },
+  "about": {
+    "title": "About Me",
+    "content": "I work in a goal-oriented and solution-focused manner, actively tackling challenges to learn from them. I break down complex tasks into clear steps, analyze their structure, and develop logically comprehensible solutions that I reliably implement while detecting and correcting deviations early. With strong communication skills, I work effectively with teams and stakeholders. High motivation and quick comprehension enable me to rapidly acquire new content for studies and work and to efficiently complete tasks."
+  },
+  "experience": {
+    "title": "Professional Experience",
+    "period": "2022 — 2025",
+    "jobs": [
+      {
+        "period": "11/2024 – 10/2025",
+        "role": "Working Student IT Service Management",
+        "company": "Noris Network AG",
+        "location": "Nuremberg, Germany",
+        "description": "Development of AI-powered solutions for IT service management",
+        "achievements": [
+          "Developed a GDPR-compliant pseudonymization pipeline for ServiceNow CSV exports with deterministic seed initialization and parallelization (multiprocessing) while ensuring cross-table referential integrity",
+          "Developed an LLM evaluator with Composite Quality Index (CQI) and NLI checks for benchmarking Now-Assist responses",
+          "Designed prompts, guardrails, and monitoring for Now Assist (GenAI) in ITSM"
+        ]
+      },
+      {
+        "period": "09/2022 – 02/2023",
+        "role": "Software Developer Intern",
+        "company": "Antonov Logistics SALIS GmbH",
+        "location": "Leipzig, Germany",
+        "description": "Development of internal authentication systems",
+        "achievements": [
+          "Standardized internal authentication by replacing third-party tools with a custom-developed LDAP client in C#",
+          "Provided REST/CLI interface for service integrations"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "title": "Education",
+    "items": [
+      {
+        "period": "2020 – 2025",
+        "degree": "B. Sc. Computer Science",
+        "institution": "Coburg University of Applied Sciences",
+        "location": "Coburg, Germany",
+        "thesis": "Bachelor Thesis: Privacy-compliant ITSM process support through generative and agent-based AI based on the ServiceNow platform"
+      },
+      {
+        "period": "2019 – 2020",
+        "degree": "Technical University Entrance Qualification",
+        "institution": "Studienkolleg Coburg",
+        "location": "Coburg, Germany"
+      }
+    ]
+  },
+  "skills": {
+    "title": "Skills",
+    "items": [
+      {
+        "name": "Python",
+        "description": "Data pipelines with pandas, CLI tools, asynchronous jobs, ML/NLP workflows with Hugging Face Transformers and PyTorch, NumPy"
+      },
+      {
+        "name": "Software Modeling and Architecture",
+        "description": "UML, sequence and ER diagrams, architecture styles, API design, modular services, prototyping, requirements analysis and decomposition"
+      },
+      {
+        "name": "SQL",
+        "description": "Schema design, multi-table joins, window functions, indexing and query plan basics, PostgreSQL, MySQL"
+      },
+      {
+        "name": "DevOps",
+        "description": "Git, GitHub and GitLab, CI basics, Docker, Kubernetes basics, MLOps basics, Linux, scripting"
+      },
+      {
+        "name": "Amazon Web Services",
+        "description": "Cloud basics in provisioning, networking, access control, simple deployments and monitoring"
+      },
+      {
+        "name": "C++",
+        "description": "Practical knowledge in tooling and prototype development"
+      },
+      {
+        "name": "LLM Fine-Tuning",
+        "description": "Dataset curation and cleaning, instruction tuning with Hugging Face Transformers and PEFT/LoRA/QLoRA, prompt templates and tokenization, training/validation pipelines"
+      },
+      {
+        "name": "Java",
+        "description": "OOP, REST backends, Spring basics, unit tests"
+      },
+      {
+        "name": "ServiceNow",
+        "description": "Workflows, Flow Designer and IntegrationHub, Business Rules and Script Includes, service catalog, REST integrations, Now Assist (GenAI) integration"
+      },
+      {
+        "name": "React (+ TypeScript)",
+        "description": "Vite apps, component design, Tailwind CSS/shadcn/ui, responsive layouts, API integration"
+      },
+      {
+        "name": "C#",
+        "description": "Practical knowledge in .NET console tools and utilities"
+      }
+    ]
+  },
+  "projects": {
+    "title": "Projects",
+    "items": [
+      {
+        "name": "ServiceNow Data Anonymization Tool",
+        "company": "Noris Network",
+        "github": "https://github.com/efedleikudl/sn_anonymizer",
+        "description": "Provided GDPR-compliant test data, measured by error-free ServiceNow imports with preserved referential integrity, through modular Python anonymizer with deterministic seeding and multiprocess pipelines.",
+        "achievements": [
+          "Full PII coverage, measurable by precise masking of names, emails, phone numbers, addresses and companies even in free text, through combination of regex and NLP",
+          "Reproducibility ensured, measured by consistent repeat runs and validations, through seed-based anonymization and robust export workflows",
+          "Result: Enabled GDPR-compliant test data generation for development and test environments, with preserved referential integrity and data structure"
+        ],
+        "tech": ["Python", "pandas", "NLP", "Multiprocessing", "GDPR"]
+      },
+      {
+        "name": "Now Assist Evaluator",
+        "company": "Noris Network",
+        "github": "https://github.com/efedleikudl/nowassist_evaluator",
+        "description": "Standardized AI response quality, measured via a confidence-based Composite Quality Index, by building a four-stage evaluator on semantic, pragmatic, lexical and structural levels.",
+        "achievements": [
+          "Increased analysis capability, measurable by CSV exports per stage and overall score, through stable export modules",
+          "Scaled throughput, measured by efficient NLI processing and better GPU utilization, through integration of Transformers with batching and lazy loading",
+          "Result: Accelerated enterprise-specific AI integration, measurable by shorter integration cycles and less rework, through task-weighted scores, prompts and guardrails for Now Assist in ITSM"
+        ],
+        "tech": ["Python", "Transformers", "NLI", "LLM", "ServiceNow"]
+      },
+      {
+        "name": "Sparrow LDAP Client",
+        "company": "Antonov Logistics",
+        "description": "Standardized internal authentication, measured by complete replacement of third-party tools, through development of standalone LDAP client in C# with Bind/Search/Add/Modify/Delete and desktop GUI.",
+        "achievements": [
+          "Reduced onboarding effort, measurable by faster bulk updates, through LDIF/CSV import/export and visual GUI",
+          "Automated provisioning, measured by stable integrations in services, through provided REST and CLI interfaces",
+          "Result: Standardized LDAP access across all teams and elimination of third-party tool dependency"
+        ],
+        "tech": ["C#", ".NET", "LDAP", "REST API", "CLI"]
+      }
+    ]
+  },
+  "publications": {
+    "title": "Publications",
+    "items": [
+      {
+        "authors": "Lurin, I., Gorobeiko, M., Sokol, Y., Usenko, O., Khoroshun, E., Makarov, V., Nehoduiko, V., Gumeniuk, K., Gorobeyko, B., & Dinets, A.",
+        "year": "2024",
+        "title": "A review of the artificial intelligence application as a guideline tool for the wound management",
+        "journal": "EMERGENCY MEDICINE, 20(5), 417–422",
+        "doi": "https://doi.org/10.22141/2224-0586.20.5.2024.1742"
+      },
+      {
+        "authors": "Lurin I, Gorobeiko M, Lovin A, Gorobeyko B, Lovina N, Dinets A",
+        "year": "2024",
+        "title": "APPLICATION OF ARTIFICIAL INTELLIGENCE IN CIVIL AND MILITARY MEDICINE",
+        "journal": "Georgian Med News. 2024 Mar;(348):94-98",
+        "pmid": "38807400"
+      }
+    ]
+  },
+  "conferences": {
+    "title": "Conferences",
+    "items": [
+      {
+        "date": "09/2025",
+        "name": "GI VR/AR Workshop — Presentation",
+        "location": "TU Chemnitz, Chemnitz",
+        "presentation": "Roman Kobets, Borys Gorobeyko and Jens Grubert: \"Gazing into the Past: An Immersive Gallery of Historical Images via Camera-Guided Video Diffusion and Gaussian Splats\""
+      },
+      {
+        "date": "2023",
+        "name": "Zech Sicherheitstechnik - Innovation Day — Participant",
+        "location": "Leipzig"
+      }
+    ]
+  },
+  "languages": {
+    "title": "Language Skills",
+    "items": [
+      { "name": "German", "level": "C1" },
+      { "name": "English", "level": "C1" },
+      { "name": "Ukrainian", "level": "Native" },
+      { "name": "Russian", "level": "Native" }
+    ]
+  },
+  "contact": {
+    "title": "Let's Connect",
+    "description": "Always interested in new opportunities, collaborations, and conversations about technology and innovation.",
+    "elsewhere": "ELSEWHERE"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "builtWith": "Built with a lot of coffee"
+  }
+}
