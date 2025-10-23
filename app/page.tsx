@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
-import { getTranslations, defaultLocale, type Locale } from "@/lib/i18n"
+import { getTranslations, detectBrowserLocale, type Locale } from "@/lib/i18n"
 import { parseBoldText } from "@/lib/utils"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { ProjectSlider } from "@/components/project-slider"
@@ -11,7 +11,7 @@ import { SkillCard } from "@/components/skill-card"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("")
-  const [locale, setLocale] = useState<Locale>(defaultLocale)
+  const [locale, setLocale] = useState<Locale>(detectBrowserLocale())
   const sectionsRef = useRef<(HTMLElement | null)[]>([])
 
   const t = getTranslations(locale)
