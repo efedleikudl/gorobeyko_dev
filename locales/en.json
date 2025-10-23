@@ -13,19 +13,19 @@
     "name": "Borys",
     "surname": "Gorobeyko",
     "title": "Computer Scientist & AI Specialist",
-    "description": "Developing goal-oriented and solution-focused software at the intersection of **artificial intelligence**, **data processing**, and **IT service management**.",
+    "description": "I develop solutions that integrate systems, make data usable, and deploy AI productively.",
     "availability": "Available for work",
     "location": "Coburg, Germany",
-    "currently": "CURRENTLY",
+    "currently": "PREVIOUS POSITION",
     "currentRole": "Working Student IT Service Management",
     "currentCompany": "@ Noris Network AG",
     "currentPeriod": "11/2024 — 10/2025",
     "focus": "FOCUS",
-    "focusSkills": ["Python", "ServiceNow", "LLM", "NLP", "DevOps"]
+    "focusSkills": [ "Python", "Java", "MLOps", "LLM", "React", "SQL"]
   },
   "about": {
     "title": "About Me",
-    "content": "I work in a goal-oriented and solution-focused manner, actively tackling challenges to learn from them. I break down complex tasks into clear steps, analyze their structure, and develop logically comprehensible solutions that I reliably implement while detecting and correcting deviations early. With strong communication skills, I work effectively with teams and stakeholders. High motivation and quick comprehension enable me to rapidly acquire new content for studies and work and to efficiently complete tasks."
+    "content": "I am a computer science graduate and developer focused on AI-powered solutions, frontend and backend development. I enjoy solving complex problems pragmatically, building things cleanly, and turning knowledge directly into working products. I love what I do and stay curious - that's why I continuously learn new things and experiment with modern tools and methods."
   },
   "experience": {
     "title": "Professional Experience",
@@ -136,7 +136,7 @@
           "Reproducibility ensured, measured by consistent repeat runs and validations, through seed-based anonymization and robust export workflows",
           "Result: Enabled GDPR-compliant test data generation for development and test environments, with preserved referential integrity and data structure"
         ],
-        "tech": ["Python", "pandas", "NLP", "Multiprocessing", "GDPR"]
+        "tech": ["Python", "pandas", "NLP", "Multithreading", "CSV", "ServiceNow"]
       },
       {
         "name": "Now Assist Evaluator",
@@ -148,7 +148,7 @@
           "Scaled throughput, measured by efficient NLI processing and better GPU utilization, through integration of Transformers with batching and lazy loading",
           "Result: Accelerated enterprise-specific AI integration, measurable by shorter integration cycles and less rework, through task-weighted scores, prompts and guardrails for Now Assist in ITSM"
         ],
-        "tech": ["Python", "Transformers", "NLI", "LLM", "ServiceNow"]
+        "tech": ["Requirements Analysis", "Python", "NowAssist", "NLI", "LLM", "Hugging Face"]
       },
       {
         "name": "Sparrow LDAP Client",
@@ -159,7 +159,7 @@
           "Automated provisioning, measured by stable integrations in services, through provided REST and CLI interfaces",
           "Result: Standardized LDAP access across all teams and elimination of third-party tool dependency"
         ],
-        "tech": ["C#", ".NET", "LDAP", "REST API", "CLI"]
+        "tech": ["C#", ".NET", "LDAP", "REST API", "CLI", "Linux"]
       }
     ]
   },
@@ -208,9 +208,9 @@
     ]
   },
   "contact": {
-    "title": "Let's Connect",
+    "title": "Get in touch",
     "description": "Always interested in new opportunities, collaborations, and conversations about technology and innovation.",
-    "elsewhere": "ELSEWHERE"
+    "elsewhere": "Or find me here:"
   },
   "footer": {
     "rights": "All rights reserved",
