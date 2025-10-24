@@ -15,7 +15,9 @@ export function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
   const mouseRef = useRef({ x: 0, y: 0 })
-  const animationFrameRef = useRef<number>()
+  const animationFrameRef = useRef<number>(0)
+  const isMobileRef = useRef(false)
+  const lastSizeRef = useRef({ width: 0, height: 0 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -24,10 +26,32 @@ export function ParticleBackground() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
+    // Detect mobile device
+    isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768
+
     // Set canvas size
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      const newWidth = window.innerWidth
+      const newHeight = window.innerHeight
+
+      // On mobile, ignore small height changes (address bar showing/hiding)
+      if (isMobileRef.current) {
+        const heightDiff = Math.abs(newHeight - lastSizeRef.current.height)
+        const widthDiff = Math.abs(newWidth - lastSizeRef.current.width)
+
+        // Only reinitialize if width changed significantly or height changed by more than 100px
+        if (widthDiff < 10 && heightDiff < 100 && lastSizeRef.current.width > 0) {
+          // Just update canvas size without reinitializing particles
+          canvas.width = newWidth
+          canvas.height = newHeight
+          return
+        }
+      }
+
+      canvas.width = newWidth
+      canvas.height = newHeight
+      lastSizeRef.current = { width: newWidth, height: newHeight }
+      isMobileRef.current = newWidth < 768
       initParticles()
     }
 
@@ -52,7 +76,10 @@ export function ParticleBackground() {
 
     // Mouse move handler
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
+      // Only track mouse on desktop
+      if (!isMobileRef.current) {
+        mouseRef.current = { x: e.clientX, y: e.clientY }
+      }
     }
 
     // Animation loop
@@ -71,23 +98,27 @@ export function ParticleBackground() {
         particle.x += particle.vx
         particle.y += particle.vy
 
-        // Mouse interaction - subtle attraction/repulsion
-        const dx = mouseRef.current.x - particle.x
-        const dy = mouseRef.current.y - particle.y
-        const distance = Math.sqrt(dx * dx + dy * dy)
-        const maxDistance = 150
+        // Mouse interaction - only on desktop
+        if (!isMobileRef.current) {
+          const dx = mouseRef.current.x - particle.x
+          const dy = mouseRef.current.y - particle.y
+          const distance = Math.sqrt(dx * dx + dy * dy)
+          const maxDistance = 150
 
-        if (distance < maxDistance) {
-          const force = (maxDistance - distance) / maxDistance
-          const angle = Math.atan2(dy, dx)
-          particle.x -= Math.cos(angle) * force * 2
-          particle.y -= Math.sin(angle) * force * 2
+          if (distance < maxDistance) {
+            const force = (maxDistance - distance) / maxDistance
+            const angle = Math.atan2(dy, dx)
+            particle.x -= Math.cos(angle) * force * 2
+            particle.y -= Math.sin(angle) * force * 2
+          }
         }
 
-        // Return to base position gently
-        const returnForce = 0.02
-        particle.x += (particle.baseX - particle.x) * returnForce
-        particle.y += (particle.baseY - particle.y) * returnForce
+        // Return to base position gently (only if not on mobile for smoother drift)
+        if (!isMobileRef.current) {
+          const returnForce = 0.02
+          particle.x += (particle.baseX - particle.x) * returnForce
+          particle.y += (particle.baseY - particle.y) * returnForce
+        }
 
         // Bounce off edges
         if (particle.x < 0 || particle.x > canvas.width) {
