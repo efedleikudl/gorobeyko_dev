@@ -17,7 +17,20 @@ const geist = Geist({
 })
 
 export const metadata: Metadata = {
-  title: "Borys Gorobeyko - Informatiker & KI-Spezialist",
+  title: "Borys Gorobeyko - Portfolio",
+  description: "Portfolio of Borys Gorobeyko - Computer Science graduate and developer focused on AI-powered solutions, frontend and backend development.",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+    other: [
+      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+  },
 }
 
 export default function RootLayout({
