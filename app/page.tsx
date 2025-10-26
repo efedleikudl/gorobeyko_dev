@@ -52,11 +52,24 @@ export default function Home() {
             <button
               key={section}
               onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
-              className={`w-2 h-8 rounded-full transition-all duration-500 ${
-                activeSection === section ? "bg-foreground" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
-              }`}
+              className="group flex items-center gap-3"
               aria-label={`Navigate to ${section}`}
-            />
+            >
+              <div
+                className={`w-2 h-8 rounded-full transition-all duration-500 ${
+                  activeSection === section ? "bg-foreground" : "bg-muted-foreground/30 group-hover:bg-muted-foreground/60"
+                }`}
+              />
+              <span
+                className={`text-sm font-mono transition-all duration-500 ${
+                  activeSection === section
+                    ? "text-foreground"
+                    : "text-muted-foreground/40 group-hover:text-muted-foreground/60"
+                }`}
+              >
+                {t.nav[section as keyof typeof t.nav]}
+              </span>
+            </button>
           ))}
         </div>
       </nav>
