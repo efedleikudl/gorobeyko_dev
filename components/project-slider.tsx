@@ -19,6 +19,12 @@ interface ProjectSliderProps {
 export function ProjectSlider({ projects }: ProjectSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragOffset, setDragOffset] = useState(0)
+
+  const minSwipeDistance = 30
 
   useEffect(() => {
     if (!isAutoPlaying) return
@@ -45,12 +51,65 @@ export function ProjectSlider({ projects }: ProjectSliderProps) {
     setIsAutoPlaying(false)
   }
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+    setIsDragging(true)
+    setIsAutoPlaying(false)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!touchStart) return
+
+    const currentTouch = e.targetTouches[0].clientX
+    const diff = currentTouch - touchStart
+
+    setTouchEnd(currentTouch)
+    setDragOffset(diff)
+  }
+
+  const onTouchEnd = () => {
+    setIsDragging(false)
+    setDragOffset(0)
+
+    if (!touchStart || !touchEnd) return
+
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      goToNext()
+    } else if (isRightSwipe) {
+      goToPrevious()
+    }
+
+    setTouchStart(null)
+    setTouchEnd(null)
+  }
+
+  const onTouchCancel = () => {
+    setIsDragging(false)
+    setDragOffset(0)
+    setTouchStart(null)
+    setTouchEnd(null)
+  }
+
   return (
     <div className="relative">
-      <div className="overflow-hidden">
+      <div
+        className="overflow-hidden touch-pan-y"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchCancel}
+      >
         <div
-          className="flex transition-transform duration-500 ease-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          className="flex ease-out"
+          style={{
+            transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
+            transition: isDragging ? 'none' : 'transform 500ms',
+          }}
         >
           {projects.map((project, index) => (
             <div key={index} className="w-full flex-shrink-0">
@@ -139,7 +198,7 @@ export function ProjectSlider({ projects }: ProjectSliderProps) {
               ))}
             </div>
 
-            <div className="flex gap-2">
+            <div className="hidden sm:flex gap-2">
               <button
                 onClick={goToPrevious}
                 className="p-2 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300 group"
