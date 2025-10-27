@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 
 import { Geist, Geist as FontGeist, Geist_Mono as FontGeistMono, Source_Serif_4 as FontSourceSerif4 } from 'next/font/google'
+import { UmamiAnalytics } from "@/components/umami-analytics"
 
 // Initialize fonts
 const _geist = FontGeist({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
@@ -40,7 +41,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
-      <body className="font-sans antialiased" suppressHydrationWarning>{children}</body>
+      <body className="font-sans antialiased" suppressHydrationWarning>
+        <UmamiAnalytics />
+        {children}
+      </body>
     </html>
   )
 }
