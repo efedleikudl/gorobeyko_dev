@@ -16,12 +16,12 @@
     "description": "I develop solutions that integrate systems, make data usable, and deploy AI productively.",
     "availability": "Available for work",
     "location": "Coburg, Germany",
-    "currently": "PREVIOUS POSITION",
-    "currentRole": "Working Student IT Service Management",
-    "currentCompany": "@ Noris Network AG",
-    "currentPeriod": "11/2024 — 10/2025",
+    "currently": "CURRENT POSITION",
+    "currentRole": "IT Cloud Engineer",
+    "currentCompany": "@ cloudopserve GmbH",
+    "currentPeriod": "11/2025 — Present",
     "focus": "FOCUS",
-    "focusSkills": [ "Python", "Java", "MLOps", "LLM", "React", "SQL"]
+    "focusSkills": [ "Python", "AWS", "MLOps", "LLM", "React", "SQL"]
   },
   "about": {
     "title": "About Me",
