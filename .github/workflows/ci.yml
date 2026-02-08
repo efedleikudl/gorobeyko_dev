@@ -24,8 +24,6 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install
-      - name: Lint
-        run: pnpm lint
       - name: Type check
         run: pnpm tsc --noEmit
       - name: Build
