@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 
-interface Project {
+export interface Project {
   name: string
   company: string
   github?: string
@@ -19,22 +19,37 @@ interface ProjectSliderProps {
 export function ProjectSlider({ projects }: ProjectSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState(0)
+  const sliderRef = useRef<HTMLDivElement>(null)
 
   const minSwipeDistance = 30
 
+  // Only auto-play when visible in viewport
   useEffect(() => {
-    if (!isAutoPlaying) return
+    const el = sliderRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!isAutoPlaying || !isVisible) return
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % projects.length)
     }, 8000)
 
     return () => clearInterval(interval)
-  }, [isAutoPlaying, projects.length])
+  }, [isAutoPlaying, isVisible, projects.length])
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index)
@@ -49,6 +64,10 @@ export function ProjectSlider({ projects }: ProjectSliderProps) {
   const goToNext = () => {
     setCurrentIndex((prev) => (prev + 1) % projects.length)
     setIsAutoPlaying(false)
+  }
+
+  const toggleAutoPlay = () => {
+    setIsAutoPlaying((prev) => !prev)
   }
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -96,7 +115,7 @@ export function ProjectSlider({ projects }: ProjectSliderProps) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative" ref={sliderRef}>
       <div
         className="overflow-hidden touch-pan-y"
         onTouchStart={onTouchStart}
@@ -108,7 +127,7 @@ export function ProjectSlider({ projects }: ProjectSliderProps) {
           className="flex ease-out"
           style={{
             transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
-            transition: isDragging ? 'none' : 'transform 500ms',
+            transition: isDragging ? "none" : "transform 500ms",
           }}
         >
           {projects.map((project, index) => (
@@ -181,8 +200,8 @@ export function ProjectSlider({ projects }: ProjectSliderProps) {
       </div>
 
       {projects.length > 1 && (
-        <>
-          <div className="flex items-center justify-between mt-6">
+        <div className="flex items-center justify-between mt-6">
+          <div className="flex items-center gap-3">
             <div className="flex gap-2">
               {projects.map((_, index) => (
                 <button
@@ -198,38 +217,54 @@ export function ProjectSlider({ projects }: ProjectSliderProps) {
               ))}
             </div>
 
-            <div className="hidden sm:flex gap-2">
-              <button
-                onClick={goToPrevious}
-                className="p-2 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300 group"
-                aria-label="Previous project"
-              >
-                <svg
-                  className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <button
+              onClick={toggleAutoPlay}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground transition-colors duration-300"
+              aria-label={isAutoPlaying ? "Pause auto-play" : "Resume auto-play"}
+            >
+              {isAutoPlaying ? (
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
                 </svg>
-              </button>
-              <button
-                onClick={goToNext}
-                className="p-2 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300 group"
-                aria-label="Next project"
-              >
-                <svg
-                  className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              ) : (
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
                 </svg>
-              </button>
-            </div>
+              )}
+            </button>
           </div>
-        </>
+
+          <div className="hidden sm:flex gap-2">
+            <button
+              onClick={goToPrevious}
+              className="p-2 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300 group"
+              aria-label="Previous project"
+            >
+              <svg
+                className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={goToNext}
+              className="p-2 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300 group"
+              aria-label="Next project"
+            >
+              <svg
+                className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
       )}
     </div>
   )

@@ -2,10 +2,8 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
+    // Required for static export — images are pre-optimized at source
     unoptimized: true,
   },
 }

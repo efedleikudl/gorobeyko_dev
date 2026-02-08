@@ -14,7 +14,7 @@
     "surname": "Gorobeyko",
     "title": "Informatiker & KI-Spezialist",
     "description": "Ich entwickle Lösungen, die Systeme integrieren, Daten nutzbar machen und KI produktiv einsetzen.",
-    "availability": "Verfügbar für Arbeit",
+    "availability": "Offen für Kooperationen",
     "location": "Coburg, Deutschland",
     "currently": "AKTUELLE STELLE",
     "currentRole": "IT Cloud Engineer",
@@ -210,7 +210,13 @@
   "contact": {
     "title": "Kontakt aufnehmen",
     "description": "Immer interessiert an neuen Möglichkeiten, Kooperationen und Gesprächen über Technologie und Innovation.",
-    "elsewhere": "Oder finden Sie mich hier:"
+    "elsewhere": "Oder finden Sie mich hier:",
+    "email": "bgorobejko@gmail.com",
+    "socials": [
+      { "name": "GitHub", "url": "https://github.com/efedleikudl" },
+      { "name": "ORCID", "url": "https://orcid.org/0009-0006-6531-8767" },
+      { "name": "LinkedIn", "url": "https://linkedin.com/in/borys-gorobeyko-b24ab7279" }
+    ]
   },
   "footer": {
     "rights": "Alle Rechte vorbehalten",

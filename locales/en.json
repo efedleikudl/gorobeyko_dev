@@ -14,7 +14,7 @@
     "surname": "Gorobeyko",
     "title": "Computer Scientist & AI Specialist",
     "description": "I develop solutions that integrate systems, make data usable, and deploy AI productively.",
-    "availability": "Available for work",
+    "availability": "Open to Cooperation",
     "location": "Coburg, Germany",
     "currently": "CURRENT POSITION",
     "currentRole": "IT Cloud Engineer",
@@ -210,7 +210,13 @@
   "contact": {
     "title": "Get in touch",
     "description": "Always interested in new opportunities, collaborations, and conversations about technology and innovation.",
-    "elsewhere": "Or find me here:"
+    "elsewhere": "Or find me here:",
+    "email": "bgorobejko@gmail.com",
+    "socials": [
+      { "name": "GitHub", "url": "https://github.com/efedleikudl" },
+      { "name": "ORCID", "url": "https://orcid.org/0009-0006-6531-8767" },
+      { "name": "LinkedIn", "url": "https://linkedin.com/in/borys-gorobeyko-b24ab7279" }
+    ]
   },
   "footer": {
     "rights": "All rights reserved",
