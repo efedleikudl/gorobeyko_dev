@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next"
 
+import { sharedPortfolio } from "@/lib/portfolio"
+
 export const dynamic = "force-static"
 
 export default function robots(): MetadataRoute.Robots {
@@ -8,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://www.gorobeyko.com/sitemap.xml",
+    sitemap: `${sharedPortfolio.siteUrl}/sitemap.xml`,
   }
 }

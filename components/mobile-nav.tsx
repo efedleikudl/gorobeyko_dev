@@ -1,75 +1,112 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import type { Translations } from "@/lib/i18n"
+import { useEffect, useRef, useState } from "react"
+
+import type { PortfolioContent, SectionId } from "@/lib/portfolio"
 
 interface MobileNavProps {
-  t: Translations
-  activeSection: string
-  navSections: string[]
+  items: PortfolioContent["navigation"]
+  labels: PortfolioContent["ui"]
+  activeSection: SectionId
+  alternatePath: PortfolioContent["alternatePath"]
 }
 
-export function MobileNav({ t, activeSection, navSections }: MobileNavProps) {
+export function MobileNav({ items, labels, activeSection, alternatePath }: MobileNavProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const restoreFocusRef = useRef(true)
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = ""
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    function handleClose() {
+      setIsOpen(false)
+      if (restoreFocusRef.current) {
+        triggerRef.current?.focus()
+      }
     }
+
+    function handleCancel(event: Event) {
+      event.preventDefault()
+      dialog?.close()
+    }
+
+    dialog.addEventListener("close", handleClose)
+    dialog.addEventListener("cancel", handleCancel)
     return () => {
-      document.body.style.overflow = ""
+      dialog.removeEventListener("close", handleClose)
+      dialog.removeEventListener("cancel", handleCancel)
     }
-  }, [isOpen])
+  }, [])
+
+  function openDialog() {
+    const dialog = dialogRef.current
+    if (!dialog || dialog.open) return
+    restoreFocusRef.current = true
+    dialog.showModal()
+    setIsOpen(true)
+  }
+
+  function closeDialog(restoreFocus = true) {
+    const dialog = dialogRef.current
+    if (!dialog?.open) return
+    restoreFocusRef.current = restoreFocus
+    dialog.close()
+  }
 
   return (
     <>
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-6 right-6 z-50 p-3 rounded-lg border border-border bg-background/80 backdrop-blur-sm hover:border-muted-foreground/50 transition-all duration-300 lg:hidden"
-        aria-label={isOpen ? "Close menu" : "Open menu"}
+        ref={triggerRef}
+        type="button"
+        className="mobile-menu-trigger"
+        aria-label={labels.openMenu}
         aria-expanded={isOpen}
+        aria-controls="mobile-navigation-dialog"
+        onClick={openDialog}
       >
-        <svg
-          className="w-5 h-5 text-foreground transition-transform duration-300"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          style={{ transform: isOpen ? "rotate(90deg)" : "none" }}
-        >
-          {isOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
+        <span aria-hidden="true" className="menu-lines">
+          <span />
+          <span />
+        </span>
       </button>
 
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-sm lg:hidden"
-            onClick={() => setIsOpen(false)}
-          />
-          <nav className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 lg:hidden" aria-label="Mobile navigation">
-            {navSections.map((section) => (
-              <button
-                key={section}
-                onClick={() => {
-                  document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })
-                  setIsOpen(false)
-                }}
-                className={`text-xl font-light transition-colors duration-300 ${
-                  activeSection === section ? "text-foreground" : "text-muted-foreground hover:text-foreground/70"
-                }`}
-              >
-                {t.nav[section as keyof typeof t.nav]}
-              </button>
+      <dialog
+        ref={dialogRef}
+        id="mobile-navigation-dialog"
+        className="mobile-dialog"
+        aria-label={labels.mobileNavigation}
+      >
+        <div className="mobile-dialog-header">
+          <span className="mobile-dialog-title">Borys Gorobeyko</span>
+          <button type="button" className="dialog-close" aria-label={labels.closeMenu} onClick={() => closeDialog()}>
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <nav aria-label={labels.mobileNavigation}>
+          <ol>
+            {items.map(({ id, label }, index) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  aria-current={activeSection === id ? "location" : undefined}
+                  onClick={() => closeDialog(false)}
+                >
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  {label}
+                </a>
+              </li>
             ))}
-          </nav>
-        </>
-      )}
+          </ol>
+        </nav>
+
+        <a className="mobile-language-link" href={alternatePath} hrefLang={alternatePath === "/" ? "de" : "en"}>
+          {labels.languageLink}
+        </a>
+      </dialog>
     </>
   )
 }

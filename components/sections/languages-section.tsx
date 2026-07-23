@@ -1,31 +1,25 @@
-"use client"
-
-import type { Translations } from "@/lib/i18n"
+import type { PortfolioContent } from "@/lib/portfolio"
 
 interface LanguagesSectionProps {
-  t: Translations
+  content: PortfolioContent
 }
 
-export function LanguagesSection({ t }: LanguagesSectionProps) {
+export function LanguagesSection({ content }: LanguagesSectionProps) {
   return (
-    <section className="py-20 sm:py-32">
-      <div className="space-y-12 sm:space-y-16">
-        <h2 className="text-3xl sm:text-4xl font-light">{t.languages.title}</h2>
+    <section id="languages" className="content-section languages-section" aria-labelledby="languages-heading">
+      <header className="section-heading">
+        <p className="section-number" aria-hidden="true">07</p>
+        <h2 id="languages-heading">{content.sectionTitles.languages}</h2>
+      </header>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {t.languages.items.map((lang, index) => (
-            <div
-              key={index}
-              className="p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300"
-            >
-              <div className="space-y-2">
-                <div className="text-foreground">{lang.name}</div>
-                <div className="text-sm text-muted-foreground">{lang.level}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ul className="language-grid">
+        {content.languages.map((language) => (
+          <li key={language.id}>
+            <span>{language.name}</span>
+            <strong>{language.level}</strong>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

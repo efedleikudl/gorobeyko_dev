@@ -7,178 +7,128 @@ interface Particle {
   y: number
   vx: number
   vy: number
-  baseX: number
-  baseY: number
 }
 
 export function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const particlesRef = useRef<Particle[]>([])
-  const mouseRef = useRef({ x: 0, y: 0 })
-  const animationFrameRef = useRef<number>(0)
-  const isMobileRef = useRef(false)
-  const lastSizeRef = useRef({ width: 0, height: 0 })
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (!canvas || reducedMotion.matches) return
 
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    const context = canvas.getContext("2d")
+    if (!context) return
+    const drawingContext = context
 
-    // Detect mobile device
-    isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)")
+    const mouse = { x: -1000, y: -1000 }
+    let particles: Particle[] = []
+    let frame = 0
+    let running = false
 
-    // Set canvas size
-    const resizeCanvas = () => {
-      const newWidth = window.innerWidth
-      const newHeight = window.innerHeight
+    function resize() {
+      if (!canvas) return
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+      const width = window.innerWidth
+      const height = window.innerHeight
+      canvas.width = Math.floor(width * dpr)
+      canvas.height = Math.floor(height * dpr)
+      canvas.style.width = `${width}px`
+      canvas.style.height = `${height}px`
+      drawingContext.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-      // On mobile, ignore small height changes (address bar showing/hiding)
-      if (isMobileRef.current) {
-        const heightDiff = Math.abs(newHeight - lastSizeRef.current.height)
-        const widthDiff = Math.abs(newWidth - lastSizeRef.current.width)
-
-        // Only reinitialize if width changed significantly or height changed by more than 100px
-        if (widthDiff < 10 && heightDiff < 100 && lastSizeRef.current.width > 0) {
-          // Just update canvas size without reinitializing particles
-          canvas.width = newWidth
-          canvas.height = newHeight
-          return
-        }
-      }
-
-      canvas.width = newWidth
-      canvas.height = newHeight
-      lastSizeRef.current = { width: newWidth, height: newHeight }
-      isMobileRef.current = newWidth < 768
-      initParticles()
+      const count = Math.min(42, Math.max(14, Math.floor((width * height) / 32_000)))
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: (Math.random() - 0.5) * 0.12,
+      }))
     }
 
-    // Initialize particles
-    const initParticles = () => {
-      particlesRef.current = []
-      const particleCount = Math.floor((canvas.width * canvas.height) / 15000)
+    function draw() {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      drawingContext.clearRect(0, 0, width, height)
 
-      for (let i = 0; i < particleCount; i++) {
-        const x = Math.random() * canvas.width
-        const y = Math.random() * canvas.height
-        particlesRef.current.push({
-          x,
-          y,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          baseX: x,
-          baseY: y,
-        })
-      }
-    }
+      particles.forEach((particle, index) => {
+        particle.x = (particle.x + particle.vx + width) % width
+        particle.y = (particle.y + particle.vy + height) % height
 
-    // Mouse move handler
-    const handleMouseMove = (e: MouseEvent) => {
-      // Only track mouse on desktop
-      if (!isMobileRef.current) {
-        mouseRef.current = { x: e.clientX, y: e.clientY }
-      }
-    }
-
-    // Animation loop
-    const animate = () => {
-      if (!ctx || !canvas) return
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      // Get theme color
-      const isDark = document.documentElement.classList.contains("dark")
-      const particleColor = isDark ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.3)"
-      const lineColor = isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.1)"
-
-      particlesRef.current.forEach((particle, i) => {
-        // Gentle drift
-        particle.x += particle.vx
-        particle.y += particle.vy
-
-        // Mouse interaction - only on desktop
-        if (!isMobileRef.current) {
-          const dx = mouseRef.current.x - particle.x
-          const dy = mouseRef.current.y - particle.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-          const maxDistance = 150
-
-          if (distance < maxDistance) {
-            const force = (maxDistance - distance) / maxDistance
-            const angle = Math.atan2(dy, dx)
-            particle.x -= Math.cos(angle) * force * 2
-            particle.y -= Math.sin(angle) * force * 2
+        if (finePointer.matches) {
+          const dx = mouse.x - particle.x
+          const dy = mouse.y - particle.y
+          const distance = Math.hypot(dx, dy)
+          if (distance > 0 && distance < 120) {
+            const force = (120 - distance) / 120
+            particle.x -= (dx / distance) * force * 0.7
+            particle.y -= (dy / distance) * force * 0.7
           }
         }
 
-        // Return to base position gently (only if not on mobile for smoother drift)
-        if (!isMobileRef.current) {
-          const returnForce = 0.02
-          particle.x += (particle.baseX - particle.x) * returnForce
-          particle.y += (particle.baseY - particle.y) * returnForce
-        }
+        drawingContext.beginPath()
+        drawingContext.arc(particle.x, particle.y, 1.2, 0, Math.PI * 2)
+        drawingContext.fillStyle = "rgba(255, 255, 255, 0.18)"
+        drawingContext.fill()
 
-        // Bounce off edges
-        if (particle.x < 0 || particle.x > canvas.width) {
-          particle.vx *= -1
-          particle.baseX = particle.x
-        }
-        if (particle.y < 0 || particle.y > canvas.height) {
-          particle.vy *= -1
-          particle.baseY = particle.y
-        }
-
-        // Draw particle
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2)
-        ctx.fillStyle = particleColor
-        ctx.fill()
-
-        // Draw connections to nearby particles
-        for (let j = i + 1; j < particlesRef.current.length; j++) {
-          const other = particlesRef.current[j]
-          const dx = particle.x - other.x
-          const dy = particle.y - other.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-
-          if (distance < 120) {
-            ctx.beginPath()
-            ctx.moveTo(particle.x, particle.y)
-            ctx.lineTo(other.x, other.y)
-            ctx.strokeStyle = lineColor
-            ctx.lineWidth = 1
-            ctx.stroke()
+        for (let otherIndex = index + 1; otherIndex < particles.length; otherIndex += 1) {
+          const other = particles[otherIndex]
+          const distance = Math.hypot(particle.x - other.x, particle.y - other.y)
+          if (distance < 105) {
+            drawingContext.beginPath()
+            drawingContext.moveTo(particle.x, particle.y)
+            drawingContext.lineTo(other.x, other.y)
+            drawingContext.strokeStyle = `rgba(255, 255, 255, ${0.055 * (1 - distance / 105)})`
+            drawingContext.stroke()
           }
         }
       })
 
-      animationFrameRef.current = requestAnimationFrame(animate)
+      if (running) frame = window.requestAnimationFrame(draw)
     }
 
-    // Initialize
-    resizeCanvas()
-    window.addEventListener("resize", resizeCanvas)
-    window.addEventListener("mousemove", handleMouseMove)
-    animate()
+    function start() {
+      if (running || document.hidden) return
+      running = true
+      frame = window.requestAnimationFrame(draw)
+    }
 
-    // Cleanup
-    return () => {
-      window.removeEventListener("resize", resizeCanvas)
-      window.removeEventListener("mousemove", handleMouseMove)
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
+    function stop() {
+      running = false
+      window.cancelAnimationFrame(frame)
+    }
+
+    function handleVisibility() {
+      if (document.hidden) stop()
+      else start()
+    }
+
+    function handleMouseMove(event: MouseEvent) {
+      if (finePointer.matches) {
+        mouse.x = event.clientX
+        mouse.y = event.clientY
       }
+    }
+
+    resize()
+    start()
+    window.addEventListener("resize", resize)
+    window.addEventListener("mousemove", handleMouseMove, { passive: true })
+    document.addEventListener("visibilitychange", handleVisibility)
+
+    return () => {
+      stop()
+      window.removeEventListener("resize", resize)
+      window.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("visibilitychange", handleVisibility)
+      particles = []
     }
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.6 }}
-      aria-hidden="true"
-    />
+    <div aria-hidden="true">
+      <canvas ref={canvasRef} className="particle-background" />
+    </div>
   )
 }

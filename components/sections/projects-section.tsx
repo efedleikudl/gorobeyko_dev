@@ -1,23 +1,52 @@
-"use client"
-
-import type { Translations } from "@/lib/i18n"
-import { ProjectSlider } from "@/components/project-slider"
+import type { PortfolioContent } from "@/lib/portfolio"
 
 interface ProjectsSectionProps {
-  t: Translations
-  sectionRef: (el: HTMLElement | null) => void
+  content: PortfolioContent
 }
 
-export function ProjectsSection({ t, sectionRef }: ProjectsSectionProps) {
+export function ProjectsSection({ content }: ProjectsSectionProps) {
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="min-h-screen py-20 sm:py-32 opacity-0"
-    >
-      <div className="space-y-12 sm:space-y-16">
-        <h2 className="text-3xl sm:text-4xl font-light">{t.projects.title}</h2>
-        <ProjectSlider projects={t.projects.items} />
+    <section id="projects" className="content-section" aria-labelledby="projects-heading">
+      <header className="section-heading">
+        <p className="section-number" aria-hidden="true">03</p>
+        <h2 id="projects-heading">{content.sectionTitles.projects}</h2>
+      </header>
+
+      <div className="project-grid">
+        {content.projects.map((project, index) => (
+          <article className="project-card" key={project.id}>
+            <div className="project-card-heading">
+              <p className="project-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</p>
+              <div>
+                <h3>{project.name}</h3>
+                <p className="organization">{project.company}</p>
+              </div>
+              {"github" in project && project.github && (
+                <a
+                  className="external-link"
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`GitHub, ${project.name} (${content.ui.externalLink})`}
+                >
+                  GitHub <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+
+            <p className="item-description">{project.description}</p>
+            <ul className="achievement-list">
+              {project.achievements.map((achievement) => (
+                <li key={achievement}>{achievement}</li>
+              ))}
+            </ul>
+            <ul className="tag-list" aria-label={`${project.name}: ${content.ui.technologies}`}>
+              {project.technologies.map((technology) => (
+                <li key={technology}>{technology}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
       </div>
     </section>
   )
