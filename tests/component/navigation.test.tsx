@@ -8,43 +8,33 @@ import { getPortfolioContent } from "@/lib/portfolio"
 
 describe("navigation", () => {
   it("tracks the active desktop section while keeping real anchors", () => {
-    let notify: IntersectionObserverCallback | undefined
-    const observe = vi.fn()
-
-    class ControlledIntersectionObserver {
-      constructor(callback: IntersectionObserverCallback) {
-        notify = callback
-      }
-      observe = observe
-      disconnect = vi.fn()
-      unobserve = vi.fn()
-      takeRecords = vi.fn(() => [])
-      root = null
-      rootMargin = "0px"
-      thresholds = [0]
-    }
-
-    vi.stubGlobal("IntersectionObserver", ControlledIntersectionObserver)
     const content = getPortfolioContent("en")
-    const section = document.createElement("section")
-    section.id = "projects"
-    document.body.append(section)
+    const intro = document.createElement("section")
+    const projects = document.createElement("section")
+    let projectTop = 800
+
+    intro.id = "intro"
+    projects.id = "projects"
+    vi.spyOn(intro, "getBoundingClientRect").mockReturnValue({ top: -500 } as DOMRect)
+    vi.spyOn(projects, "getBoundingClientRect").mockImplementation(
+      () => ({ top: projectTop }) as DOMRect,
+    )
+    document.body.append(intro, projects)
 
     render(<Navigation items={content.navigation} labels={content.ui} currentLocale={content.locale} />)
 
     const projectLinks = screen.getAllByRole("link", { name: "Projects" })
     expect(projectLinks[0]).toHaveAttribute("href", "#projects")
+    expect(projectLinks[0]).not.toHaveAttribute("aria-current")
 
+    projectTop = 100
     act(() => {
-      notify?.(
-        [{ target: section, isIntersecting: true, intersectionRatio: 0.8 } as unknown as IntersectionObserverEntry],
-        {} as IntersectionObserver,
-      )
+      fireEvent.scroll(document)
     })
 
     expect(projectLinks[0]).toHaveAttribute("aria-current", "location")
-    section.remove()
-    vi.unstubAllGlobals()
+    intro.remove()
+    projects.remove()
   })
 
   it("closes the native mobile dialog with Escape and restores trigger focus", async () => {

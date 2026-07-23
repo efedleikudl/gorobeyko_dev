@@ -20,23 +20,54 @@ export function Navigation({ items, labels, currentLocale }: NavigationProps) {
       .map(({ id }) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null)
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.reduce<IntersectionObserverEntry | undefined>((current, entry) => {
-          if (!entry.isIntersecting) return current
-          if (!current || entry.intersectionRatio > current.intersectionRatio) return entry
-          return current
-        }, undefined)
+    function updateActiveSection() {
+      if (sections.length === 0) return
 
-        if (visible) {
-          setActiveSection(visible.target.id as SectionId)
+      const activationLine = window.innerHeight * 0.34
+      const pageHeight = document.documentElement.scrollHeight
+      const isAtPageEnd =
+        window.scrollY > 0 && Math.ceil(window.scrollY + window.innerHeight) >= pageHeight - 2
+      let currentSection = sections[0]
+
+      if (isAtPageEnd) {
+        currentSection = sections.at(-1) ?? currentSection
+      } else {
+        for (const section of sections) {
+          if (section.getBoundingClientRect().top > activationLine) break
+          currentSection = section
         }
-      },
-      { rootMargin: "-25% 0px -60%", threshold: [0, 0.1, 0.5] },
-    )
+      }
 
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
+      setActiveSection((current) => {
+        const next = currentSection.id as SectionId
+        return current === next ? current : next
+      })
+    }
+
+    const observer =
+      "IntersectionObserver" in window
+        ? new IntersectionObserver(updateActiveSection, {
+            rootMargin: "-34% 0px -65%",
+            threshold: 0,
+          })
+        : null
+
+    updateActiveSection()
+    sections.forEach((section) => observer?.observe(section))
+    window.addEventListener("scroll", updateActiveSection, { passive: true })
+    window.addEventListener("resize", updateActiveSection)
+    window.addEventListener("hashchange", updateActiveSection)
+    window.addEventListener("pageshow", updateActiveSection)
+    document.addEventListener("scroll", updateActiveSection, { capture: true, passive: true })
+
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener("scroll", updateActiveSection)
+      window.removeEventListener("resize", updateActiveSection)
+      window.removeEventListener("hashchange", updateActiveSection)
+      window.removeEventListener("pageshow", updateActiveSection)
+      document.removeEventListener("scroll", updateActiveSection, true)
+    }
   }, [items])
 
   return (
