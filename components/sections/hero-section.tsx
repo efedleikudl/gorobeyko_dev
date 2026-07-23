@@ -40,14 +40,14 @@ export function HeroSection({ content }: HeroSectionProps) {
         </div>
 
         <aside className="hero-aside" aria-label={hero.currentPosition}>
-          <div>
+          <div className="hero-aside-section">
             <p className="eyebrow">{hero.currentPosition}</p>
             <p className="current-role">{hero.currentRole.title}</p>
             <p>{hero.currentRole.company}</p>
             <p className="period">{hero.currentRole.period}</p>
           </div>
 
-          <div>
+          <div className="hero-aside-section">
             <p className="eyebrow">{hero.focus}</p>
             <ul className="tag-list" aria-label={hero.focus}>
               {person.focus.map((skill) => (
