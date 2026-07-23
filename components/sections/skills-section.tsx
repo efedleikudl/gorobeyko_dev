@@ -1,25 +1,25 @@
-"use client"
-
-import type { Translations } from "@/lib/i18n"
-import { SkillCard } from "@/components/skill-card"
+import type { PortfolioContent } from "@/lib/portfolio"
 
 interface SkillsSectionProps {
-  t: Translations
-  sectionRef: (el: HTMLElement | null) => void
+  content: PortfolioContent
 }
 
-export function SkillsSection({ t, sectionRef }: SkillsSectionProps) {
+export function SkillsSection({ content }: SkillsSectionProps) {
   return (
-    <section id="skills" ref={sectionRef} className="py-20 sm:py-32 opacity-0">
-      <div className="space-y-12 sm:space-y-16">
-        <h2 className="text-3xl sm:text-4xl font-light">{t.skills.title}</h2>
+    <section id="skills" className="content-section" aria-labelledby="skills-heading">
+      <header className="section-heading">
+        <p className="section-number" aria-hidden="true">04</p>
+        <h2 id="skills-heading">{content.sectionTitles.skills}</h2>
+      </header>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-          {t.skills.items.map((skill, index) => (
-            <SkillCard key={index} name={skill.name} description={skill.description} />
-          ))}
-        </div>
-      </div>
+      <ul className="skills-grid">
+        {content.skills.map((skill) => (
+          <li key={skill.id}>
+            <h3>{skill.name}</h3>
+            <p>{skill.description}</p>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

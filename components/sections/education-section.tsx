@@ -1,40 +1,32 @@
-"use client"
-
-import type { Translations } from "@/lib/i18n"
+import type { PortfolioContent } from "@/lib/portfolio"
 
 interface EducationSectionProps {
-  t: Translations
-  sectionRef: (el: HTMLElement | null) => void
+  content: PortfolioContent
 }
 
-export function EducationSection({ t, sectionRef }: EducationSectionProps) {
+export function EducationSection({ content }: EducationSectionProps) {
   return (
-    <section id="education" ref={sectionRef} className="py-20 sm:py-32 opacity-0">
-      <div className="space-y-12 sm:space-y-16">
-        <h2 className="text-3xl sm:text-4xl font-light">{t.education.title}</h2>
+    <section id="education" className="content-section" aria-labelledby="education-heading">
+      <header className="section-heading">
+        <p className="section-number" aria-hidden="true">05</p>
+        <h2 id="education-heading">{content.sectionTitles.education}</h2>
+      </header>
 
-        <div className="space-y-8">
-          {t.education.items.map((item, index) => (
-            <div
-              key={index}
-              className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 border-b border-border/50 hover:border-border transition-colors duration-500"
-            >
-              <div className="lg:col-span-3">
-                <div className="text-sm text-muted-foreground font-mono group-hover:text-foreground transition-colors duration-500">
-                  {item.period}
-                </div>
+      <ol className="timeline compact-timeline">
+        {content.education.map((item) => (
+          <li key={item.id}>
+            <article className="timeline-item">
+              <p className="period">{item.period}</p>
+              <div className="timeline-content">
+                <h3>{item.degree}</h3>
+                <p className="organization">{item.institution}</p>
+                <p className="location">{item.location}</p>
+                {"thesis" in item && item.thesis && <p className="item-description">{item.thesis}</p>}
               </div>
-
-              <div className="lg:col-span-9 space-y-2">
-                <h3 className="text-lg sm:text-xl font-medium">{item.degree}</h3>
-                <div className="text-muted-foreground">{item.institution}</div>
-                <div className="text-sm text-muted-foreground">{item.location}</div>
-                {item.thesis && <p className="text-sm text-muted-foreground leading-relaxed pt-2">{item.thesis}</p>}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+            </article>
+          </li>
+        ))}
+      </ol>
     </section>
   )
 }

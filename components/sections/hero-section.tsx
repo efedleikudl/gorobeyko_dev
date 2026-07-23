@@ -1,88 +1,70 @@
-"use client"
-
-import type { Translations } from "@/lib/i18n"
-import { parseBoldText } from "@/lib/utils"
+import type { PortfolioContent } from "@/lib/portfolio"
 
 interface HeroSectionProps {
-  t: Translations
-  sectionRef: (el: HTMLElement | null) => void
+  content: PortfolioContent
 }
 
-export function HeroSection({ t, sectionRef }: HeroSectionProps) {
+export function HeroSection({ content }: HeroSectionProps) {
+  const { hero, person, about } = content
+
   return (
-    <>
-      <header
-        id="intro"
-        ref={sectionRef}
-        className="min-h-screen flex items-center opacity-0"
-      >
-        <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
-          <div className="lg:col-span-3 space-y-6 sm:space-y-8">
-            <div className="space-y-3 sm:space-y-2">
-              <div className="text-sm text-muted-foreground font-mono tracking-wider">{t.hero.subtitle}</div>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
-                {t.hero.name}
-                <br />
-                <span className="text-muted-foreground">{t.hero.surname}</span>
-              </h1>
-            </div>
+    <section id="intro" className="hero-section" aria-labelledby="hero-heading">
+      <div className="hero-grid">
+        <div className="hero-primary">
+          <p className="eyebrow">{hero.eyebrow}</p>
+          <h1 id="hero-heading">
+            {person.firstName}
+            <br />
+            <span>{person.lastName}</span>
+          </h1>
+          <p className="professional-title">{person.professionalTitle}</p>
+          <p className="hero-description">{hero.description}</p>
 
-            <div className="space-y-6 max-w-md">
-              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                {parseBoldText(t.hero.description).map((part) =>
-                  part.type === "bold" ? (
-                    <span key={part.key} className="text-foreground">
-                      {part.content}
-                    </span>
-                  ) : (
-                    <span key={part.key}>{part.content}</span>
-                  )
-                )}
-              </p>
-
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  {t.hero.availability}
-                </div>
-                <div>{t.hero.location}</div>
-              </div>
-            </div>
+          <div className="hero-actions">
+            <a className="primary-action" href="#projects">
+              {hero.viewProjects}
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a className="secondary-action" href="#contact">
+              {hero.contact}
+            </a>
           </div>
 
-          <div className="lg:col-span-2 flex flex-col justify-end space-y-6 sm:space-y-8 mt-8 lg:mt-0">
-            <div className="space-y-4">
-              <div className="text-sm text-muted-foreground font-mono">{t.hero.currently}</div>
-              <div className="space-y-2">
-                <div className="text-foreground">{t.hero.currentRole}</div>
-                <div className="text-muted-foreground">{t.hero.currentCompany}</div>
-                <div className="text-xs text-muted-foreground">{t.hero.currentPeriod}</div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="text-sm text-muted-foreground font-mono">{t.hero.focus}</div>
-              <div className="flex flex-wrap gap-2">
-                {t.hero.focusSkills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
+          <div className="availability-row">
+            <span className="availability">
+              <span className="status-dot" aria-hidden="true" />
+              {hero.availability}
+            </span>
+            <span>{person.location}</span>
           </div>
         </div>
-      </header>
 
-      <section className="py-20 sm:py-32">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-light mb-8">{t.about.title}</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">{t.about.content}</p>
+        <aside className="hero-aside" aria-label={hero.currentPosition}>
+          <div>
+            <p className="eyebrow">{hero.currentPosition}</p>
+            <p className="current-role">{hero.currentRole.title}</p>
+            <p>{hero.currentRole.company}</p>
+            <p className="period">{hero.currentRole.period}</p>
+          </div>
+
+          <div>
+            <p className="eyebrow">{hero.focus}</p>
+            <ul className="tag-list" aria-label={hero.focus}>
+              {person.focus.map((skill) => (
+                <li key={skill}>{skill}</li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div className="about-block">
+        <p className="section-number" aria-hidden="true">01</p>
+        <div>
+          <h2>{about.title}</h2>
+          <p>{about.content}</p>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }

@@ -1,19 +1,13 @@
-"use client"
-
 import Script from "next/script"
 
 export function UmamiAnalytics() {
   const websiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID
-  const src = process.env.NEXT_PUBLIC_UMAMI_SRC || "https://cloud.umami.is/script.js"
-
-  if (!websiteId) {
-    return null
-  }
+  if (!websiteId) return null
 
   return (
     <Script
       async
-      src={src}
+      src="https://cloud.umami.is/script.js"
       data-website-id={websiteId}
       strategy="afterInteractive"
     />
