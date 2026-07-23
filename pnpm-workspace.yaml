@@ -1,0 +1,8 @@
+packages:
+  - "."
+
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - "next@16.2.11"
+  - "@next/*"
+trustPolicy: no-downgrade
