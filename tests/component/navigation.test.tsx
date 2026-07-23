@@ -30,7 +30,7 @@ describe("navigation", () => {
     section.id = "projects"
     document.body.append(section)
 
-    render(<Navigation items={content.navigation} labels={content.ui} alternatePath={content.alternatePath} />)
+    render(<Navigation items={content.navigation} labels={content.ui} currentLocale={content.locale} />)
 
     const projectLinks = screen.getAllByRole("link", { name: "Projects" })
     expect(projectLinks[0]).toHaveAttribute("href", "#projects")
@@ -55,7 +55,7 @@ describe("navigation", () => {
         items={content.navigation}
         labels={content.ui}
         activeSection="intro"
-        alternatePath={content.alternatePath}
+        currentLocale={content.locale}
       />,
     )
 

@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from "react"
 
+import { LanguageSwitcher } from "@/components/language-switcher"
 import { MobileNav } from "@/components/mobile-nav"
-import type { PortfolioContent, SectionId } from "@/lib/portfolio"
+import type { Locale, PortfolioContent, SectionId } from "@/lib/portfolio"
 
 interface NavigationProps {
   items: PortfolioContent["navigation"]
   labels: PortfolioContent["ui"]
-  alternatePath: PortfolioContent["alternatePath"]
+  currentLocale: Locale
 }
 
-export function Navigation({ items, labels, alternatePath }: NavigationProps) {
+export function Navigation({ items, labels, currentLocale }: NavigationProps) {
   const [activeSection, setActiveSection] = useState<SectionId>("intro")
 
   useEffect(() => {
@@ -57,16 +58,14 @@ export function Navigation({ items, labels, alternatePath }: NavigationProps) {
             )
           })}
         </ol>
-        <a className="side-language-link" href={alternatePath} hrefLang={alternatePath === "/" ? "de" : "en"}>
-          {labels.languageLink}
-        </a>
+        <LanguageSwitcher currentLocale={currentLocale} className="side-language-switcher" />
       </nav>
 
       <MobileNav
         items={items}
         labels={labels}
         activeSection={activeSection}
-        alternatePath={alternatePath}
+        currentLocale={currentLocale}
       />
     </>
   )

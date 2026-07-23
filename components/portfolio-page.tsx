@@ -25,7 +25,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
       <Navigation
         items={content.navigation}
         labels={content.ui}
-        alternatePath={content.alternatePath}
+        currentLocale={content.locale}
       />
 
       <main id="main-content" className="site-main" tabIndex={-1}>

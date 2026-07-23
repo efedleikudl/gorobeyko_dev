@@ -2,16 +2,17 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import type { PortfolioContent, SectionId } from "@/lib/portfolio"
+import { LanguageSwitcher } from "@/components/language-switcher"
+import type { Locale, PortfolioContent, SectionId } from "@/lib/portfolio"
 
 interface MobileNavProps {
   items: PortfolioContent["navigation"]
   labels: PortfolioContent["ui"]
   activeSection: SectionId
-  alternatePath: PortfolioContent["alternatePath"]
+  currentLocale: Locale
 }
 
-export function MobileNav({ items, labels, activeSection, alternatePath }: MobileNavProps) {
+export function MobileNav({ items, labels, activeSection, currentLocale }: MobileNavProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const restoreFocusRef = useRef(true)
@@ -103,9 +104,7 @@ export function MobileNav({ items, labels, activeSection, alternatePath }: Mobil
           </ol>
         </nav>
 
-        <a className="mobile-language-link" href={alternatePath} hrefLang={alternatePath === "/" ? "de" : "en"}>
-          {labels.languageLink}
-        </a>
+        <LanguageSwitcher currentLocale={currentLocale} className="mobile-language-switcher" />
       </dialog>
     </>
   )

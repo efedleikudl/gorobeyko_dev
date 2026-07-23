@@ -3,7 +3,7 @@ export const locales = ["de", "en"] as const
 export type Locale = (typeof locales)[number]
 
 export const localePaths = {
-  de: "/",
+  de: "/de/",
   en: "/en/",
 } as const satisfies Record<Locale, `/${string}`>
 
@@ -58,7 +58,7 @@ interface RoleFact {
 }
 
 export const sharedPortfolio = {
-  siteUrl: "https://www.gorobeyko.com",
+  siteUrl: "https://gorobeyko.com",
   person: {
     firstName: "Borys",
     lastName: "Gorobeyko",
@@ -168,7 +168,6 @@ interface LocalizedCopy {
     mobileNavigation: string
     openMenu: string
     closeMenu: string
-    languageLink: string
     externalLink: string
     technologies: string
   }
@@ -229,7 +228,6 @@ const localizedCopy = {
       mobileNavigation: "Mobile Seitennavigation",
       openMenu: "Menü öffnen",
       closeMenu: "Menü schließen",
-      languageLink: "English version",
       externalLink: "öffnet in einem neuen Tab",
       technologies: "Technologien",
     },
@@ -378,7 +376,6 @@ const localizedCopy = {
       mobileNavigation: "Mobile section navigation",
       openMenu: "Open menu",
       closeMenu: "Close menu",
-      languageLink: "Deutsche Version",
       externalLink: "opens in a new tab",
       technologies: "technologies",
     },
@@ -517,8 +514,6 @@ export function getPortfolioContent(locale: Locale) {
   return {
     locale,
     path: localePaths[locale],
-    alternateLocale: locale === "de" ? ("en" as const) : ("de" as const),
-    alternatePath: locale === "de" ? localePaths.en : localePaths.de,
     metadata: copy.metadata,
     navigation: sectionIds.map((id) => ({ id, label: copy.nav[id] })),
     ui: copy.ui,

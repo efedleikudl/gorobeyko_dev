@@ -12,7 +12,7 @@ import {
 describe("portfolio content", () => {
   it("defines one static path per supported locale", () => {
     expect(locales).toEqual(["de", "en"])
-    expect(localePaths).toEqual({ de: "/", en: "/en/" })
+    expect(localePaths).toEqual({ de: "/de/", en: "/en/" })
     expect(new Set(Object.values(localePaths)).size).toBe(locales.length)
   })
 

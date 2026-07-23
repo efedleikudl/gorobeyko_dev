@@ -28,7 +28,7 @@ export function getLocalizedMetadata(locale: Locale): Metadata {
       languages: {
         "de-DE": localePaths.de,
         "en-US": localePaths.en,
-        "x-default": localePaths.de,
+        "x-default": localePaths.en,
       },
     },
     openGraph: {

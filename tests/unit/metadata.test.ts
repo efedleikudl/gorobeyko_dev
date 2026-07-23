@@ -8,12 +8,12 @@ describe("localized metadata", () => {
     const german = getLocalizedMetadata("de")
     const english = getLocalizedMetadata("en")
 
-    expect(german.alternates?.canonical).toBe("/")
+    expect(german.alternates?.canonical).toBe("/de/")
     expect(english.alternates?.canonical).toBe("/en/")
     expect(german.alternates?.languages).toEqual({
-      "de-DE": "/",
+      "de-DE": "/de/",
       "en-US": "/en/",
-      "x-default": "/",
+      "x-default": "/en/",
     })
     expect(german.openGraph).toMatchObject({ locale: "de_DE", alternateLocale: ["en_US"] })
     expect(english.openGraph).toMatchObject({ locale: "en_US", alternateLocale: ["de_DE"] })
@@ -23,12 +23,12 @@ describe("localized metadata", () => {
     expect(getPersonStructuredData("de")).toMatchObject({
       name: "Borys Gorobeyko",
       inLanguage: "de",
-      url: "https://www.gorobeyko.com/",
+      url: "https://gorobeyko.com/de/",
     })
     expect(getPersonStructuredData("en")).toMatchObject({
       name: "Borys Gorobeyko",
       inLanguage: "en",
-      url: "https://www.gorobeyko.com/en/",
+      url: "https://gorobeyko.com/en/",
     })
   })
 

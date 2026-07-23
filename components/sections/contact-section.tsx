@@ -1,3 +1,4 @@
+import { LanguageSwitcher } from "@/components/language-switcher"
 import type { PortfolioContent } from "@/lib/portfolio"
 
 interface ContactSectionProps {
@@ -37,9 +38,7 @@ export function ContactSection({ content }: ContactSectionProps) {
           <p>© {content.footer.year} Borys Gorobeyko. {content.footer.rights}.</p>
           <p>{content.footer.builtWith}</p>
         </div>
-        <a href={content.alternatePath} hrefLang={content.alternateLocale}>
-          {content.ui.languageLink}
-        </a>
+        <LanguageSwitcher currentLocale={content.locale} className="footer-language-switcher" />
       </footer>
     </>
   )

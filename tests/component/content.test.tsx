@@ -39,7 +39,12 @@ describe("localized portfolio sections", () => {
       "mailto:bgorobejko@gmail.com",
     )
     const footer = screen.getByRole("contentinfo")
-    expect(within(footer).getByRole("link", { name: "English version" })).toHaveAttribute("href", "/en/")
+    expect(within(footer).getByRole("link", { name: "English" })).toHaveAttribute("href", "../en/")
+    expect(within(footer).getByRole("link", { name: "Deutsch" })).toHaveAttribute("href", "../de/")
+    expect(within(footer).getByRole("link", { name: "Deutsch" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    )
 
     for (const link of screen.getAllByRole("link", { name: /opens|öffnet/ })) {
       expect(link).toHaveAttribute("target", "_blank")
