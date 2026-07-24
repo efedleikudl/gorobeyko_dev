@@ -17,7 +17,7 @@ describe("particle constellation", () => {
     expect(options.polygon).toMatchObject({
       enable: true,
       inline: { arrangement: PolygonMaskInlineArrangement.equidistant },
-      move: { radius: 18, type: PolygonMaskMoveType.path },
+      move: { radius: 14, type: PolygonMaskMoveType.path },
       type: PolygonMaskType.inline,
     })
     expect(options.polygon.data.path).toBe(KUBERNETES_LOGO_PATH)

@@ -92,9 +92,11 @@ export function createParticleOptions(isNarrow: boolean) {
         arrangement: PolygonMaskInlineArrangement.equidistant,
       },
       move: {
-        // Short leash keeps the helm outline legible while still letting
-        // particles breathe.
-        radius: isNarrow ? 12 : 18,
+        // Each particle is tethered to its spawn point on the outline; once it
+        // strays past this radius the plugin reverses its velocity to pull it
+        // home. A short leash makes the helm snap back crisply after a repulse
+        // instead of settling scattered at a wide boundary.
+        radius: isNarrow ? 9 : 14,
         type: PolygonMaskMoveType.path,
       },
       position: {
