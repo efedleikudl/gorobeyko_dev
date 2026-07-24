@@ -30,13 +30,23 @@ export function createParticleOptions(isNarrow: boolean) {
           // Keep the affected area tight around the cursor so it nudges rather
           // than plows through the figure.
           distance: isNarrow ? 40 : 56,
-          // Gentle, gradual displacement: low force + low speed cap + a soft
-          // easing let particles drift away and ease back smoothly.
           duration: 0.9,
           easing: "ease-out-quad",
-          factor: 45,
+          // factor is kept just under maxSpeed so the per-frame push follows the
+          // easing falloff instead of being clamped flat — a soft gradient that
+          // is strongest at the cursor and fades to nothing at the edge.
+          factor: 3.2,
           maxSpeed: 3.5,
           speed: 1,
+          // The elastic half: once the cursor leaves, each particle eases back
+          // to the exact spot it held in the logo and snaps home within 0.5px.
+          // Without this the mask never reforms after a repulse.
+          restore: {
+            enable: true,
+            delay: 0,
+            speed: isNarrow ? 0.12 : 0.14,
+            follow: true,
+          },
         },
       },
     },
@@ -54,8 +64,11 @@ export function createParticleOptions(isNarrow: boolean) {
       move: {
         enable: true,
         outModes: { default: "bounce" },
+        // Barely-there random shimmer keeps the figure alive without letting it
+        // wander — the logo reads as rigid, and the repulse restore owns all the
+        // real motion.
         random: true,
-        speed: isNarrow ? 0.18 : 0.26,
+        speed: isNarrow ? 0.05 : 0.06,
       },
       number: {
         density: { enable: false },
@@ -92,11 +105,9 @@ export function createParticleOptions(isNarrow: boolean) {
         arrangement: PolygonMaskInlineArrangement.equidistant,
       },
       move: {
-        // Each particle is tethered to its spawn point on the outline; once it
-        // strays past this radius the plugin reverses its velocity to pull it
-        // home. A short leash makes the helm snap back crisply after a repulse
-        // instead of settling scattered at a wide boundary.
-        radius: isNarrow ? 9 : 14,
+        // A tight tether bounds the ambient shimmer so the restore target stays
+        // locked to each particle's original anchor on the outline.
+        radius: isNarrow ? 8 : 12,
         type: PolygonMaskMoveType.path,
       },
       position: {

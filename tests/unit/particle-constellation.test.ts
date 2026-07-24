@@ -17,7 +17,7 @@ describe("particle constellation", () => {
     expect(options.polygon).toMatchObject({
       enable: true,
       inline: { arrangement: PolygonMaskInlineArrangement.equidistant },
-      move: { radius: 14, type: PolygonMaskMoveType.path },
+      move: { radius: 12, type: PolygonMaskMoveType.path },
       type: PolygonMaskType.inline,
     })
     expect(options.polygon.data.path).toBe(KUBERNETES_LOGO_PATH)
@@ -33,9 +33,22 @@ describe("particle constellation", () => {
     })
     // A small radius keeps the affected area close to the cursor.
     expect(options.interactivity.modes.repulse.distance).toBeLessThanOrEqual(60)
-    // Low force + capped speed keep the displacement soft rather than a shove.
-    expect(options.interactivity.modes.repulse.factor).toBeLessThan(72)
-    expect(options.interactivity.modes.repulse.maxSpeed).toBeLessThan(8)
+    // Keep force below the speed cap so the push follows the easing gradient
+    // instead of being clamped to a flat, plow-like shove.
+    expect(options.interactivity.modes.repulse.factor)
+      .toBeLessThanOrEqual(options.interactivity.modes.repulse.maxSpeed)
+  })
+
+  it("restores each particle to its exact anchor so the logo reforms (rigid but elastic)", () => {
+    const options = createParticleOptions(false)
+
+    expect(options.interactivity.modes.repulse.restore).toMatchObject({
+      enable: true,
+      follow: true,
+    })
+    expect(options.interactivity.modes.repulse.restore.speed).toBeGreaterThan(0)
+    // A near-still ambient drift lets the figure hold its shape rigidly.
+    expect(options.particles.move.speed).toBeLessThanOrEqual(0.1)
   })
 
   it("reduces particle work and displacement on narrow screens", () => {
