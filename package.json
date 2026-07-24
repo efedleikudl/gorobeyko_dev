@@ -18,7 +18,10 @@
     "verify": "pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm build"
   },
   "dependencies": {
+    "@heroui/react": "^3.2.2",
+    "@heroui/styles": "^3.2.2",
     "geist": "1.7.0",
+    "lucide-react": "^1.24.0",
     "next": "16.2.11",
     "react": "19.2.5",
     "react-dom": "19.2.5"
