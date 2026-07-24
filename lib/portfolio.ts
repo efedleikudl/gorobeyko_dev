@@ -13,6 +13,7 @@ export const sectionIds = [
   "projects",
   "skills",
   "education",
+  "certificates",
   "publications",
   "languages",
   "contact",
@@ -29,14 +30,15 @@ export const portfolioIds = {
     "sql",
     "devops",
     "aws",
-    "cpp",
+    "terraform",
+    "kubernetes-gitops",
+    "automation",
+    "go",
     "llm-fine-tuning",
-    "java",
-    "servicenow",
     "react",
-    "csharp",
   ],
   education: ["computer-science", "studienkolleg"],
+  certificates: ["lfca"],
   publications: ["wound-management-ai", "civil-military-ai"],
   conferences: ["gi-vrar-2025", "zech-innovation-2023"],
   languages: ["german", "english", "ukrainian", "russian"],
@@ -46,6 +48,7 @@ type RoleId = (typeof portfolioIds.roles)[number]
 type ProjectId = (typeof portfolioIds.projects)[number]
 type SkillId = (typeof portfolioIds.skills)[number]
 type EducationId = (typeof portfolioIds.education)[number]
+type CertificateId = (typeof portfolioIds.certificates)[number]
 type ConferenceId = (typeof portfolioIds.conferences)[number]
 type LanguageId = (typeof portfolioIds.languages)[number]
 
@@ -65,7 +68,7 @@ export const sharedPortfolio = {
     email: "bgorobejko@gmail.com",
     city: "Coburg",
     currentRoleId: "cloudopserve" as RoleId,
-    focus: ["Python", "AWS", "MLOps", "LLM", "React", "SQL"],
+    focus: ["Kubernetes", "GitOps", "AWS", "Terraform", "CI/CD", "Python"],
     socials: [
       { id: "github", name: "GitHub", url: "https://github.com/efedleikudl" },
       { id: "orcid", name: "ORCID", url: "https://orcid.org/0009-0006-6531-8767" },
@@ -124,6 +127,14 @@ export const sharedPortfolio = {
       end: "2020",
       institution: "Studienkolleg Coburg",
       location: "Coburg",
+    },
+  },
+  certificates: {
+    lfca: {
+      issuer: "The Linux Foundation",
+      issued: "2026-01-24",
+      credentialId: "LF-6645sqsb20",
+      href: "/certificates/linux-foundation-certified-it-associate-lfca.pdf",
     },
   },
   publications: {
@@ -196,6 +207,14 @@ interface LocalizedCopy {
   >
   skills: Record<SkillId, { name: string; description: string }>
   education: Record<EducationId, { degree: string; thesis?: string }>
+  certificates: Record<CertificateId, { name: string }>
+  certificateLabels: {
+    issuer: string
+    issued: string
+    credentialId: string
+    view: string
+    download: string
+  }
   conferences: Record<ConferenceId, { participation: string }>
   languages: Record<LanguageId, { name: string; level: string }>
   publications: { heading: string; conferencesHeading: string; doi: string; pmid: string }
@@ -206,11 +225,11 @@ interface LocalizedCopy {
 const localizedCopy = {
   de: {
     metadata: {
-      title: "Borys Gorobeyko – Informatiker & KI-Spezialist",
+      title: "Borys Gorobeyko – Cloud- & DevOps-Engineer",
       description:
-        "Portfolio von Borys Gorobeyko, Informatiker und Entwickler mit Fokus auf KI-gestützte Lösungen, Cloud, Frontend und Backend.",
+        "Portfolio von Borys Gorobeyko, Cloud- und DevOps-Engineer mit Fokus auf sichere, automatisierte Infrastruktur, Kubernetes, AWS, GitOps und KI-gestützte Lösungen.",
       ogDescription:
-        "Informatiker und Entwickler mit Fokus auf KI-gestützte Lösungen, Cloud, Frontend und Backend.",
+        "Cloud- und DevOps-Engineer mit Fokus auf sichere, automatisierte Infrastruktur, Kubernetes, AWS, GitOps und KI-gestützte Lösungen.",
     },
     nav: {
       intro: "Über mich",
@@ -218,6 +237,7 @@ const localizedCopy = {
       projects: "Projekte",
       skills: "Kompetenzen",
       education: "Ausbildung",
+      certificates: "Zertifikate",
       publications: "Publikationen",
       languages: "Sprachen",
       contact: "Kontakt",
@@ -234,8 +254,9 @@ const localizedCopy = {
     common: { present: "heute" },
     hero: {
       eyebrow: "PORTFOLIO",
-      professionalTitle: "Informatiker & KI-Spezialist",
-      description: "Ich entwickle Lösungen, die Systeme integrieren, Daten nutzbar machen und KI produktiv einsetzen.",
+      professionalTitle: "Cloud- & DevOps-Engineer",
+      description:
+        "Ich entwickle, automatisiere und betreibe sichere Infrastrukturen für Banken und Brokerhäuser – mit Cloud, Kubernetes, GitOps und zuverlässiger Automatisierung für geschäftskritische Systeme.",
       availability: "Offen für Kooperationen",
       country: "Deutschland",
       currentPosition: "AKTUELLE STELLE",
@@ -246,18 +267,27 @@ const localizedCopy = {
     about: {
       title: "Über mich",
       content:
-        "Ich bin Informatikabsolvent und Entwickler mit Fokus auf KI-gestützte Lösungen sowie Frontend- und Backend-Entwicklung. Mir macht es Spaß, komplexe Probleme pragmatisch zu lösen, Dinge sauber zu bauen und Wissen direkt in funktionierende Produkte zu verwandeln. Ich liebe, was ich mache, und bleibe neugierig – deshalb lerne ich kontinuierlich Neues und experimentiere mit modernen Tools und Methoden.",
+        "Ich bin Cloud- und DevOps-Engineer mit einem Hintergrund in Informatik. Ich konzipiere, automatisiere und betreibe Infrastruktur für Finanzinstitute, darunter Banken und Brokerhäuser. Mein Schwerpunkt umfasst AWS, Kubernetes, GitOps, Infrastructure as Code, CI/CD, Workload-Automatisierung und Linux-Betrieb. KI und Data Engineering setze ich dort ein, wo sie einen konkreten operativen Mehrwert schaffen.",
     },
     sectionTitles: {
       experience: "Berufserfahrung",
       projects: "Projekte",
       skills: "Kompetenzen",
       education: "Ausbildung",
+      certificates: "Zertifikate",
       publications: "Publikationen & Konferenzen",
       languages: "Sprachkenntnisse",
     },
     roles: {
-      cloudopserve: {},
+      cloudopserve: {
+        description:
+          "Konzeption, Automatisierung und Betrieb von Infrastruktur für Finanzinstitute, darunter Banken und Brokerhäuser.",
+        achievements: [
+          "Betreue und optimiere sichere, zuverlässige Infrastruktur in AWS-, Kubernetes- und Linux-Umgebungen.",
+          "Automatisiere Bereitstellung und Deployments mit Terraform, Flux-basiertem GitOps und CI/CD-Pipelines.",
+          "Betreibe und überwache geschäftskritische Workloads, analysiere Störungen und automatisiere wiederkehrende Abläufe mit JS7 JobScheduler und n8n.",
+        ],
+      },
       noris: {
         title: "Werkstudent IT Service Management",
         description: "Entwicklung von KI-gestützten Lösungen für IT-Service-Management.",
@@ -317,14 +347,14 @@ const localizedCopy = {
       python: { name: "Python", description: "Datenpipelines mit pandas, CLI-Tools, asynchrone Jobs, ML-/NLP-Workflows mit Hugging Face Transformers und PyTorch sowie NumPy." },
       architecture: { name: "Softwaremodellierung und -architektur", description: "UML-, Sequenz- und ER-Diagramme, Architekturstile, API-Design, modulare Services, Prototyping sowie Anforderungsanalyse und -zerlegung." },
       sql: { name: "SQL", description: "Schema-Design, Mehrtabellen-Joins, Fensterfunktionen, Indexierung und Grundlagen von Abfrageplänen mit PostgreSQL und MySQL." },
-      devops: { name: "DevOps", description: "Git, GitHub und GitLab, CI-Grundlagen, Docker, Kubernetes-Grundlagen, MLOps-Grundlagen, Linux und Scripting." },
-      aws: { name: "Amazon Web Services", description: "Cloud-Grundlagen in Provisionierung, Netzwerken, Zugriffskontrolle, einfachen Deployments und Monitoring." },
-      cpp: { name: "C++", description: "Praxiskenntnisse im Tooling und in der Prototypenentwicklung." },
+      devops: { name: "DevOps", description: "Sicherer Linux-Betrieb, GitHub und GitLab, Konzeption und Pflege von CI/CD-Pipelines, Docker, Monitoring, Incident Response, Release- und Deployment-Prozesse sowie Scripting." },
+      aws: { name: "Amazon Web Services", description: "Bereitstellung und Betrieb von AWS-Infrastruktur mit Fokus auf IAM, Netzwerke, Compute und Storage, Monitoring sowie sichere, reproduzierbare Deployments." },
+      terraform: { name: "Terraform", description: "Infrastructure as Code mit wiederverwendbaren Modulen, Remote State, Plan-/Apply-Workflows, Reviews und reproduzierbaren Umgebungen." },
+      "kubernetes-gitops": { name: "Kubernetes & Flux GitOps", description: "Container-Orchestrierung, Deployments, Services, Ingress, Konfigurations- und Secret-Management, Helm sowie GitOps-Deployments und Reconciliation mit Flux." },
+      automation: { name: "Automatisierung mit JS7 & n8n", description: "Planung, Orchestrierung und Überwachung von Jobs und Workflows mit JS7 JobScheduler sowie ereignisgesteuerte Integrationen und Prozessautomatisierung mit n8n." },
+      go: { name: "Go (Golang)", description: "Entwicklung zuverlässiger CLI-Tools, Automatisierungsdienste, APIs und nebenläufiger Workloads mit Goroutines, Channels, Tests und Go Modules." },
       "llm-fine-tuning": { name: "LLM Fine-Tuning", description: "Datensatzkuratierung und -bereinigung, Instruction-Tuning mit Hugging Face Transformers und PEFT/LoRA/QLoRA, Prompt-Vorlagen und Tokenisierung sowie Trainings- und Validierungspipelines." },
-      java: { name: "Java", description: "OOP, REST-Backends, Spring-Grundlagen und Unit-Tests." },
-      servicenow: { name: "ServiceNow", description: "Workflows, Flow Designer und IntegrationHub, Business Rules und Script Includes, Servicekatalog, REST-Integrationen sowie Now Assist (GenAI)." },
       react: { name: "React (+ TypeScript)", description: "Vite-Apps, Komponentendesign, Tailwind CSS/shadcn/ui, responsive Layouts und API-Integration." },
-      csharp: { name: "C#", description: "Praxiskenntnisse in .NET-Konsolentools und -Utilities." },
     },
     education: {
       "computer-science": {
@@ -332,6 +362,16 @@ const localizedCopy = {
         thesis: "Bachelorarbeit: Datenschutzkonforme ITSM-Prozessunterstützung durch generative und agentenbasierte KI auf Basis der ServiceNow-Plattform.",
       },
       studienkolleg: { degree: "Technische Hochschulzugangsberechtigung" },
+    },
+    certificates: {
+      lfca: { name: "Linux Foundation Certified IT Associate (LFCA)" },
+    },
+    certificateLabels: {
+      issuer: "Aussteller",
+      issued: "Ausgestellt",
+      credentialId: "Zertifikats-ID",
+      view: "Zertifikat ansehen",
+      download: "PDF herunterladen",
     },
     conferences: {
       "gi-vrar-2025": { participation: "Vortrag" },
@@ -354,11 +394,11 @@ const localizedCopy = {
   },
   en: {
     metadata: {
-      title: "Borys Gorobeyko – Computer Scientist & AI Specialist",
+      title: "Borys Gorobeyko – Cloud & DevOps Engineer",
       description:
-        "Portfolio of Borys Gorobeyko, a computer scientist and developer focused on AI-powered solutions, cloud, frontend, and backend development.",
+        "Portfolio of Borys Gorobeyko, a Cloud and DevOps engineer focused on secure, automated infrastructure, Kubernetes, AWS, GitOps, and AI-powered solutions.",
       ogDescription:
-        "Computer scientist and developer focused on AI-powered solutions, cloud, frontend, and backend development.",
+        "Cloud and DevOps engineer focused on secure, automated infrastructure, Kubernetes, AWS, GitOps, and AI-powered solutions.",
     },
     nav: {
       intro: "About",
@@ -366,6 +406,7 @@ const localizedCopy = {
       projects: "Projects",
       skills: "Skills",
       education: "Education",
+      certificates: "Certificates",
       publications: "Publications",
       languages: "Languages",
       contact: "Contact",
@@ -382,8 +423,9 @@ const localizedCopy = {
     common: { present: "present" },
     hero: {
       eyebrow: "PORTFOLIO",
-      professionalTitle: "Computer Scientist & AI Specialist",
-      description: "I develop solutions that integrate systems, make data usable, and put AI to work productively.",
+      professionalTitle: "Cloud & DevOps Engineer",
+      description:
+        "I design, automate, and operate secure infrastructure for banks and brokerages—using cloud, Kubernetes, GitOps, and reliable automation to keep business-critical systems running.",
       availability: "Open to collaboration",
       country: "Germany",
       currentPosition: "CURRENT POSITION",
@@ -394,18 +436,27 @@ const localizedCopy = {
     about: {
       title: "About me",
       content:
-        "I am a computer science graduate and developer focused on AI-powered solutions as well as frontend and backend development. I enjoy solving complex problems pragmatically, building things cleanly, and turning knowledge into working products. I love what I do and stay curious, so I continuously learn and experiment with modern tools and methods.",
+        "I am a Cloud and DevOps engineer with a computer science background. I design, automate, and operate infrastructure for financial institutions, including banks and brokerages. My work spans AWS, Kubernetes, GitOps, Infrastructure as Code, CI/CD, workload automation, and Linux operations. I also apply AI and data engineering where they create practical operational value.",
     },
     sectionTitles: {
       experience: "Professional experience",
       projects: "Projects",
       skills: "Skills",
       education: "Education",
+      certificates: "Certificates",
       publications: "Publications & conferences",
       languages: "Language skills",
     },
     roles: {
-      cloudopserve: {},
+      cloudopserve: {
+        description:
+          "Designing, automating, and operating infrastructure for financial institutions, including banks and brokerages.",
+        achievements: [
+          "Manage and improve secure, reliable infrastructure across AWS, Kubernetes, and Linux environments.",
+          "Automate provisioning and deployments with Terraform, Flux-based GitOps, and CI/CD pipelines.",
+          "Operate and monitor business-critical workloads, troubleshoot incidents, and automate recurring workflows with JS7 JobScheduler and n8n.",
+        ],
+      },
       noris: {
         title: "Working Student, IT Service Management",
         description: "Development of AI-powered solutions for IT service management.",
@@ -465,14 +516,14 @@ const localizedCopy = {
       python: { name: "Python", description: "Data pipelines with pandas, CLI tools, asynchronous jobs, ML/NLP workflows with Hugging Face Transformers and PyTorch, and NumPy." },
       architecture: { name: "Software Modeling and Architecture", description: "UML, sequence and ER diagrams, architecture styles, API design, modular services, prototyping, requirements analysis, and decomposition." },
       sql: { name: "SQL", description: "Schema design, multi-table joins, window functions, indexing, and query plan basics with PostgreSQL and MySQL." },
-      devops: { name: "DevOps", description: "Git, GitHub and GitLab, CI basics, Docker, Kubernetes basics, MLOps basics, Linux, and scripting." },
-      aws: { name: "Amazon Web Services", description: "Cloud fundamentals in provisioning, networking, access control, simple deployments, and monitoring." },
-      cpp: { name: "C++", description: "Practical experience in tooling and prototype development." },
+      devops: { name: "DevOps", description: "Secure Linux operations, GitHub and GitLab, CI/CD pipeline design and maintenance, Docker, monitoring, incident response, release and deployment processes, and scripting." },
+      aws: { name: "Amazon Web Services", description: "Provisioning and operating AWS infrastructure with a focus on IAM, networking, compute and storage, monitoring, and secure, repeatable deployments." },
+      terraform: { name: "Terraform", description: "Infrastructure as Code with reusable modules, remote state, plan/apply workflows, reviews, and reproducible environments." },
+      "kubernetes-gitops": { name: "Kubernetes & Flux GitOps", description: "Container orchestration, deployments, services, ingress, configuration and secret management, Helm, and GitOps deployments and reconciliation with Flux." },
+      automation: { name: "Automation with JS7 & n8n", description: "Scheduling, orchestrating, and monitoring jobs and workflows with JS7 JobScheduler, plus event-driven integrations and process automation with n8n." },
+      go: { name: "Go (Golang)", description: "Building reliable CLI tools, automation services, APIs, and concurrent workloads with goroutines, channels, testing, and Go modules." },
       "llm-fine-tuning": { name: "LLM Fine-Tuning", description: "Dataset curation and cleaning, instruction tuning with Hugging Face Transformers and PEFT/LoRA/QLoRA, prompt templates and tokenization, and training/validation pipelines." },
-      java: { name: "Java", description: "OOP, REST backends, Spring fundamentals, and unit tests." },
-      servicenow: { name: "ServiceNow", description: "Workflows, Flow Designer and IntegrationHub, Business Rules and Script Includes, service catalog, REST integrations, and Now Assist (GenAI)." },
       react: { name: "React (+ TypeScript)", description: "Vite apps, component design, Tailwind CSS/shadcn/ui, responsive layouts, and API integration." },
-      csharp: { name: "C#", description: "Practical experience with .NET console tools and utilities." },
     },
     education: {
       "computer-science": {
@@ -480,6 +531,16 @@ const localizedCopy = {
         thesis: "Bachelor thesis: Privacy-compliant ITSM process support through generative and agent-based AI on the ServiceNow platform.",
       },
       studienkolleg: { degree: "Technical University Entrance Qualification" },
+    },
+    certificates: {
+      lfca: { name: "Linux Foundation Certified IT Associate (LFCA)" },
+    },
+    certificateLabels: {
+      issuer: "Issuer",
+      issued: "Issued",
+      credentialId: "Credential ID",
+      view: "View certificate",
+      download: "Download PDF",
     },
     conferences: {
       "gi-vrar-2025": { participation: "Presentation" },
@@ -504,6 +565,15 @@ const localizedCopy = {
 
 function formatPeriod(start: string, end: string | null, present: string) {
   return `${start} – ${end ?? present}`
+}
+
+function formatCertificateDate(date: string, locale: Locale) {
+  return new Intl.DateTimeFormat(locale === "de" ? "de-DE" : "en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T00:00:00Z`))
 }
 
 export function getPortfolioContent(locale: Locale) {
@@ -561,6 +631,13 @@ export function getPortfolioContent(locale: Locale) {
         ...copy.education[id],
       }
     }),
+    certificates: portfolioIds.certificates.map((id) => ({
+      id,
+      ...facts.certificates[id],
+      issuedLabel: formatCertificateDate(facts.certificates[id].issued, locale),
+      ...copy.certificates[id],
+    })),
+    certificateLabels: copy.certificateLabels,
     publications: portfolioIds.publications.map((id) => ({
       id,
       ...facts.publications[id],

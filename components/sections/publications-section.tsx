@@ -14,7 +14,7 @@ export function PublicationsSection({ content }: PublicationsSectionProps) {
   return (
     <section id="publications" className="content-section" aria-labelledby="publications-heading">
       <header className="section-heading">
-        <p className="section-number" aria-hidden="true">06</p>
+        <p className="section-number" aria-hidden="true">07</p>
         <h2 id="publications-heading">{content.sectionTitles.publications}</h2>
       </header>
 

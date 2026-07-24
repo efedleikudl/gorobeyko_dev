@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest"
 
 import { ContactSection } from "@/components/sections/contact-section"
 import { PortfolioPage } from "@/components/portfolio-page"
+import { CertificatesSection } from "@/components/sections/certificates-section"
 import { HeroSection } from "@/components/sections/hero-section"
 import { ProjectsSection } from "@/components/sections/projects-section"
 import { getPortfolioContent } from "@/lib/portfolio"
@@ -11,7 +12,7 @@ describe("localized portfolio sections", () => {
   it("renders direct hero anchors and the professional title", () => {
     render(<HeroSection content={getPortfolioContent("en")} />)
 
-    expect(screen.getByText("Computer Scientist & AI Specialist")).toBeVisible()
+    expect(screen.getByText("Cloud & DevOps Engineer")).toBeVisible()
     expect(screen.getByRole("link", { name: /View projects/ }))
       .toHaveAttribute("href", "#projects")
     expect(screen.getByRole("link", { name: /View projects/ })).toHaveClass("button")
@@ -42,7 +43,28 @@ describe("localized portfolio sections", () => {
     })
   })
 
-  it("renders contact details, external profiles, and an ordinary language link", () => {
+  it("offers certificate viewing and downloading", () => {
+    const content = getPortfolioContent("en")
+    render(<CertificatesSection content={content} />)
+
+    expect(
+      screen.getByRole("heading", { name: "Linux Foundation Certified IT Associate (LFCA)" }),
+    ).toBeVisible()
+    expect(screen.getByText("LF-6645sqsb20")).toBeVisible()
+
+    const viewLink = screen.getByRole("link", { name: /View certificate/ })
+    expect(viewLink).toHaveAttribute("href", content.certificates[0].href)
+    expect(viewLink).toHaveAttribute("target", "_blank")
+    expect(viewLink).toHaveAttribute("rel", "noopener noreferrer")
+    expect(viewLink).toHaveClass("certificate-view-action")
+    expect(viewLink).not.toHaveClass("hero-action", "primary-action")
+
+    const downloadLink = screen.getByRole("link", { name: "Download PDF" })
+    expect(downloadLink).toHaveAttribute("href", content.certificates[0].href)
+    expect(downloadLink).toHaveAttribute("download")
+  })
+
+  it("renders contact details and external profiles without a footer language switcher", () => {
     render(<ContactSection content={getPortfolioContent("de")} />)
 
     expect(screen.getByRole("link", { name: "E-Mail an Borys Gorobeyko" })).toHaveAttribute(
@@ -50,12 +72,8 @@ describe("localized portfolio sections", () => {
       "mailto:bgorobejko@gmail.com",
     )
     const footer = screen.getByRole("contentinfo")
-    expect(within(footer).getByRole("link", { name: "English" })).toHaveAttribute("href", "../en/")
-    expect(within(footer).getByRole("link", { name: "Deutsch" })).toHaveAttribute("href", "../de/")
-    expect(within(footer).getByRole("link", { name: "Deutsch" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    )
+    expect(within(footer).queryByRole("link", { name: "English" })).not.toBeInTheDocument()
+    expect(within(footer).queryByRole("link", { name: "Deutsch" })).not.toBeInTheDocument()
 
     for (const link of screen.getAllByRole("link", { name: /opens|öffnet/ })) {
       expect(link).toHaveAttribute("target", "_blank")

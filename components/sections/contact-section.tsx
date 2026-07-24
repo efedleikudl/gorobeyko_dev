@@ -1,7 +1,6 @@
 import { linkVariants } from "@heroui/styles/components/link"
 import { ArrowUpRight, Mail } from "lucide-react"
 
-import { LanguageSwitcher } from "@/components/language-switcher"
 import type { PortfolioContent } from "@/lib/portfolio"
 
 interface ContactSectionProps {
@@ -14,7 +13,7 @@ export function ContactSection({ content }: ContactSectionProps) {
   return (
     <>
       <section id="contact" className="contact-section" aria-labelledby="contact-heading">
-        <p className="section-number" aria-hidden="true">08</p>
+        <p className="section-number" aria-hidden="true">09</p>
         <div className="contact-copy">
           <h2 id="contact-heading">{content.contact.title}</h2>
           <p>{content.contact.description}</p>
@@ -59,7 +58,6 @@ export function ContactSection({ content }: ContactSectionProps) {
           <p>© {content.footer.year} Borys Gorobeyko. {content.footer.rights}.</p>
           <p>{content.footer.builtWith}</p>
         </div>
-        <LanguageSwitcher currentLocale={content.locale} className="footer-language-switcher" />
       </footer>
     </>
   )

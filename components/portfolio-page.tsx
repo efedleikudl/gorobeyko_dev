@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/navigation"
+import { CertificatesSection } from "@/components/sections/certificates-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { EducationSection } from "@/components/sections/education-section"
 import { ExperienceSection } from "@/components/sections/experience-section"
@@ -32,6 +33,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         <ProjectsSection content={content} />
         <SkillsSection content={content} />
         <EducationSection content={content} />
+        <CertificatesSection content={content} />
         <PublicationsSection content={content} />
         <LanguagesSection content={content} />
         <ContactSection content={content} />

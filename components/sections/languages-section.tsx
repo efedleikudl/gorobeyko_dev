@@ -8,7 +8,7 @@ export function LanguagesSection({ content }: LanguagesSectionProps) {
   return (
     <section id="languages" className="content-section languages-section" aria-labelledby="languages-heading">
       <header className="section-heading">
-        <p className="section-number" aria-hidden="true">07</p>
+        <p className="section-number" aria-hidden="true">08</p>
         <h2 id="languages-heading">{content.sectionTitles.languages}</h2>
       </header>
 
