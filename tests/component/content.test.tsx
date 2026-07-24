@@ -81,11 +81,11 @@ describe("localized portfolio sections", () => {
     }
   })
 
-  it("renders only the static page background without canvas or injected scroll scripts", () => {
+  it("mounts the interactive background without the previous topology SVG", () => {
     const { container } = render(<PortfolioPage content={getPortfolioContent("en")} />)
 
-    expect(container.querySelector("canvas")).not.toBeInTheDocument()
-    expect(container.querySelector(".particle-layer")).not.toBeInTheDocument()
+    expect(container.querySelector(".portfolio-background")).toHaveAttribute("aria-hidden", "true")
+    expect(container.querySelector(".infrastructure-topology")).not.toBeInTheDocument()
     expect(container.querySelector(".page-fade")).not.toBeInTheDocument()
     expect(container.querySelector("#portfolio-scroll-spy")).not.toBeInTheDocument()
   })

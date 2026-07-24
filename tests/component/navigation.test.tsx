@@ -2,11 +2,50 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 
+import { CommandPalette } from "@/components/command-palette"
 import { MobileNav } from "@/components/mobile-nav"
 import { Navigation } from "@/components/navigation"
 import { getPortfolioContent } from "@/lib/portfolio"
 
 describe("navigation", () => {
+  it("opens the command palette from the keyboard and follows filtered commands", async () => {
+    const content = getPortfolioContent("en")
+    render(<CommandPalette content={content} />)
+
+    fireEvent.keyDown(window, { key: "/" })
+
+    const dialog = screen.getByRole("dialog", { name: "Command palette" })
+    const search = screen.getByRole("searchbox", {
+      name: "Search a command or destination…",
+    })
+    expect(dialog).toBeVisible()
+    await waitFor(() => expect(search).toHaveFocus())
+
+    fireEvent.change(search, { target: { value: "go projects" } })
+    const projectCommand = screen.getByRole("link", { name: /go projects.*Projects/ })
+    expect(projectCommand).toHaveAttribute("href", "#projects")
+
+    fireEvent.keyDown(search, { key: "Enter" })
+    expect(screen.queryByRole("dialog", { name: "Command palette" })).not.toBeInTheDocument()
+  })
+
+  it("closes the command palette with Escape and restores trigger focus", async () => {
+    const user = userEvent.setup()
+    const content = getPortfolioContent("de")
+    render(<CommandPalette content={content} />)
+
+    const trigger = screen.getByRole("button", { name: "Befehlspalette öffnen" })
+    await user.click(trigger)
+    expect(screen.getByRole("dialog", { name: "Befehlspalette" })).toBeVisible()
+
+    await user.keyboard("{Escape}")
+
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog", { name: "Befehlspalette" })).not.toBeInTheDocument()
+      expect(trigger).toHaveFocus()
+    })
+  })
+
   it("tracks the active desktop and mobile section while keeping real anchors", async () => {
     const content = getPortfolioContent("en")
     const intro = document.createElement("section")

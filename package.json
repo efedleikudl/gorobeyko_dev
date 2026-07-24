@@ -20,6 +20,10 @@
   "dependencies": {
     "@heroui/react": "^3.2.2",
     "@heroui/styles": "^3.2.2",
+    "@tsparticles/engine": "4.3.2",
+    "@tsparticles/plugin-polygon-mask": "4.3.2",
+    "@tsparticles/react": "4.3.2",
+    "@tsparticles/slim": "4.3.2",
     "geist": "1.7.0",
     "lucide-react": "^1.24.0",
     "next": "16.2.11",

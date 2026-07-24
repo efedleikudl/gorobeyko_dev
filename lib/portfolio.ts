@@ -182,6 +182,20 @@ interface LocalizedCopy {
     closeMenu: string
     externalLink: string
     technologies: string
+    commandPalette: {
+      label: string
+      open: string
+      close: string
+      trigger: string
+      placeholder: string
+      navigation: string
+      actions: string
+      noResults: string
+      email: string
+      switchLanguage: string
+      move: string
+      select: string
+    }
   }
   common: { present: string }
   hero: {
@@ -251,6 +265,20 @@ const localizedCopy = {
       closeMenu: "Menü schließen",
       externalLink: "öffnet in einem neuen Tab",
       technologies: "Technologien",
+      commandPalette: {
+        label: "Befehlspalette",
+        open: "Befehlspalette öffnen",
+        close: "Befehlspalette schließen",
+        trigger: "Befehle",
+        placeholder: "Befehl oder Ziel suchen …",
+        navigation: "Navigation",
+        actions: "Aktionen",
+        noResults: "Kein passender Befehl gefunden.",
+        email: "E-Mail an Borys",
+        switchLanguage: "Sprache wechseln",
+        move: "Navigieren",
+        select: "Auswählen",
+      },
     },
     common: { present: "heute" },
     hero: {
@@ -420,6 +448,20 @@ const localizedCopy = {
       closeMenu: "Close menu",
       externalLink: "opens in a new tab",
       technologies: "technologies",
+      commandPalette: {
+        label: "Command palette",
+        open: "Open command palette",
+        close: "Close command palette",
+        trigger: "Commands",
+        placeholder: "Search a command or destination…",
+        navigation: "Navigation",
+        actions: "Actions",
+        noResults: "No matching command found.",
+        email: "Email Borys",
+        switchLanguage: "Switch language",
+        move: "Move",
+        select: "Select",
+      },
     },
     common: { present: "present" },
     hero: {

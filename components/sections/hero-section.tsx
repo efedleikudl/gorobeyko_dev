@@ -54,10 +54,15 @@ export function HeroSection({ content }: HeroSectionProps) {
         </div>
 
         <aside className="hero-aside" aria-label={hero.currentPosition}>
+          <div className="system-profile-header" aria-hidden="true">
+            <span className="system-profile-prompt">&gt;_</span>
+            <span>profile.yaml</span>
+            <span className="system-profile-status">ready</span>
+          </div>
+
           <div className="current-position">
             <div className="current-position-heading">
               <p className="eyebrow">{hero.currentPosition}</p>
-              <span className="current-position-signal" aria-hidden="true" />
             </div>
             <p className="current-role">{hero.currentRole.title}</p>
             <div className="current-position-meta">

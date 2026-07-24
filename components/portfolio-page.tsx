@@ -1,4 +1,6 @@
+import { CommandPalette } from "@/components/command-palette"
 import { Navigation } from "@/components/navigation"
+import { PortfolioBackground } from "@/components/portfolio-background"
 import { CertificatesSection } from "@/components/sections/certificates-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { EducationSection } from "@/components/sections/education-section"
@@ -17,6 +19,8 @@ interface PortfolioPageProps {
 export function PortfolioPage({ content }: PortfolioPageProps) {
   return (
     <div className="site-shell">
+      <PortfolioBackground />
+
       <a className="skip-link" href="#main-content">
         {content.ui.skipLink}
       </a>
@@ -26,6 +30,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         labels={content.ui}
         currentLocale={content.locale}
       />
+      <CommandPalette content={content} />
 
       <main id="main-content" className="site-main" tabIndex={-1}>
         <HeroSection content={content} />
