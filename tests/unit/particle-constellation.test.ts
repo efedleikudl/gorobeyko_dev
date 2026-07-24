@@ -24,19 +24,21 @@ describe("particle constellation", () => {
     expect(options.polygon.data.size).toEqual({ width: 24, height: 24 })
   })
 
-  it("uses a gentle, tightly-scoped repulse so the cursor nudges instead of plows", () => {
+  it("uses a strong, scoped repulse so even a fast sweep scatters the figure", () => {
     const options = createParticleOptions(false)
+    const { repulse } = options.interactivity.modes
 
     expect(options.interactivity.events.onHover).toEqual({
       enable: true,
       mode: "repulse",
     })
-    // A small radius keeps the affected area close to the cursor.
-    expect(options.interactivity.modes.repulse.distance).toBeLessThanOrEqual(60)
-    // Keep force below the speed cap so the push follows the easing gradient
-    // instead of being clamped to a flat, plow-like shove.
-    expect(options.interactivity.modes.repulse.factor)
-      .toBeLessThanOrEqual(options.interactivity.modes.repulse.maxSpeed)
+    // Wide enough to catch particles between frames on a fast move, still local.
+    expect(repulse.distance).toBeGreaterThan(56)
+    expect(repulse.distance).toBeLessThanOrEqual(90)
+    // A punchy per-frame throw so brief contact still displaces particles hard,
+    // with factor above the cap so the push holds near max across the radius.
+    expect(repulse.maxSpeed).toBeGreaterThanOrEqual(6)
+    expect(repulse.factor).toBeGreaterThan(repulse.maxSpeed)
   })
 
   it("restores each particle to its exact anchor so the logo reforms (rigid but elastic)", () => {

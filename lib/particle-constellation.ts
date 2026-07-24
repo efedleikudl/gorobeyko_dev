@@ -27,16 +27,19 @@ export function createParticleOptions(isNarrow: boolean) {
       },
       modes: {
         repulse: {
-          // Keep the affected area tight around the cursor so it nudges rather
-          // than plows through the figure.
-          distance: isNarrow ? 40 : 56,
+          // Radius of the affected area. A little wider so a fast sweep still
+          // catches particles between frames instead of slipping through gaps.
+          distance: isNarrow ? 52 : 72,
           duration: 0.9,
           easing: "ease-out-quad",
-          // factor is kept just under maxSpeed so the per-frame push follows the
-          // easing falloff instead of being clamped flat — a soft gradient that
-          // is strongest at the cursor and fades to nothing at the edge.
-          factor: 3.2,
-          maxSpeed: 3.5,
+          // Punchy push: factor sits well above maxSpeed so the shove is near its
+          // cap across most of the radius (softening only at the outer edge).
+          // maxSpeed is the real lever — it's the per-frame throw, so even the
+          // 1-2 frames of contact from a fast flick scatter particles hard. The
+          // total displacement stays bounded because a particle stops being
+          // pushed once it leaves the radius.
+          factor: 40,
+          maxSpeed: 10,
           speed: 1,
           // The elastic half: once the cursor leaves, each particle eases back
           // to the exact spot it held in the logo and snaps home within 0.5px.
@@ -46,8 +49,8 @@ export function createParticleOptions(isNarrow: boolean) {
           // reforms.
           restore: {
             enable: true,
-            delay: 0.2,
-            speed: isNarrow ? 0.035 : 0.03,
+            delay: 0,
+            speed: isNarrow ? 0.024 : 0.02,
             follow: false,
           },
         },
