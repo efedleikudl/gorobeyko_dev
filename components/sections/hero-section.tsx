@@ -1,3 +1,7 @@
+import { buttonVariants } from "@heroui/styles/components/button"
+import { separatorVariants } from "@heroui/styles/components/separator"
+import { ArrowDown, MapPin } from "lucide-react"
+
 import type { PortfolioContent } from "@/lib/portfolio"
 
 interface HeroSectionProps {
@@ -6,6 +10,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ content }: HeroSectionProps) {
   const { hero, person, about } = content
+  const asideSeparator = separatorVariants({ variant: "secondary" })
 
   return (
     <section id="intro" className="hero-section" aria-labelledby="hero-heading">
@@ -21,11 +26,17 @@ export function HeroSection({ content }: HeroSectionProps) {
           <p className="hero-description">{hero.description}</p>
 
           <div className="hero-actions">
-            <a className="primary-action" href="#projects">
+            <a
+              className={`${buttonVariants({ size: "lg", variant: "primary" })} hero-action primary-action`}
+              href="#projects"
+            >
               {hero.viewProjects}
-              <span aria-hidden="true">↓</span>
+              <ArrowDown aria-hidden="true" />
             </a>
-            <a className="secondary-action" href="#contact">
+            <a
+              className={`${buttonVariants({ size: "lg", variant: "outline" })} hero-action secondary-action`}
+              href="#contact"
+            >
               {hero.contact}
             </a>
           </div>
@@ -35,23 +46,36 @@ export function HeroSection({ content }: HeroSectionProps) {
               <span className="status-dot" aria-hidden="true" />
               {hero.availability}
             </span>
-            <span>{person.location}</span>
+            <span className="hero-location">
+              <MapPin aria-hidden="true" />
+              {person.location}
+            </span>
           </div>
         </div>
 
         <aside className="hero-aside" aria-label={hero.currentPosition}>
-          <div className="hero-aside-section">
-            <p className="eyebrow">{hero.currentPosition}</p>
+          <div className="current-position">
+            <div className="current-position-heading">
+              <p className="eyebrow">{hero.currentPosition}</p>
+              <span className="current-position-signal" aria-hidden="true" />
+            </div>
             <p className="current-role">{hero.currentRole.title}</p>
-            <p>{hero.currentRole.company}</p>
-            <p className="period">{hero.currentRole.period}</p>
+            <div className="current-position-meta">
+              <p>{hero.currentRole.company}</p>
+              <p className="period">{hero.currentRole.period}</p>
+            </div>
           </div>
 
-          <div className="hero-aside-section">
+          <div className={asideSeparator} role="separator" />
+
+          <div className="focus-strip">
             <p className="eyebrow">{hero.focus}</p>
-            <ul className="tag-list" aria-label={hero.focus}>
-              {person.focus.map((skill) => (
-                <li key={skill}>{skill}</li>
+            <ul className="focus-list" aria-label={hero.focus}>
+              {person.focus.map((skill, index) => (
+                <li key={skill}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  {skill}
+                </li>
               ))}
             </ul>
           </div>

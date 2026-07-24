@@ -35,21 +35,3 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: vi.fn(),
   })),
 })
-
-vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null)
-
-Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
-  configurable: true,
-  value(this: HTMLDialogElement) {
-    this.setAttribute("open", "")
-    this.querySelector<HTMLElement>("button, a, [tabindex]")?.focus()
-  },
-})
-
-Object.defineProperty(HTMLDialogElement.prototype, "close", {
-  configurable: true,
-  value(this: HTMLDialogElement) {
-    this.removeAttribute("open")
-    this.dispatchEvent(new Event("close"))
-  },
-})

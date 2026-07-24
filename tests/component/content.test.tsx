@@ -2,6 +2,7 @@ import { render, screen, within } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
 import { ContactSection } from "@/components/sections/contact-section"
+import { PortfolioPage } from "@/components/portfolio-page"
 import { HeroSection } from "@/components/sections/hero-section"
 import { ProjectsSection } from "@/components/sections/projects-section"
 import { getPortfolioContent } from "@/lib/portfolio"
@@ -11,11 +12,13 @@ describe("localized portfolio sections", () => {
     render(<HeroSection content={getPortfolioContent("en")} />)
 
     expect(screen.getByText("Computer Scientist & AI Specialist")).toBeVisible()
-    expect(screen.getByRole("link", { name: /View projects/ })).toHaveAttribute("href", "#projects")
+    expect(screen.getByRole("link", { name: /View projects/ }))
+      .toHaveAttribute("href", "#projects")
+    expect(screen.getByRole("link", { name: /View projects/ })).toHaveClass("button")
     expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "#contact")
   })
 
-  it("renders every project at once with safe external links", () => {
+  it("renders every project with safe external links and HeroUI technology chips", () => {
     const content = getPortfolioContent("en")
     render(<ProjectsSection content={content} />)
 
@@ -28,6 +31,14 @@ describe("localized portfolio sections", () => {
     links.forEach((link) => {
       expect(link).toHaveAttribute("target", "_blank")
       expect(link).toHaveAttribute("rel", "noopener noreferrer")
+      expect(link).toHaveClass("link")
+    })
+
+    const technologies = screen.getByRole("list", {
+      name: `${content.projects[0].name}: ${content.ui.technologies}`,
+    })
+    within(technologies).getAllByRole("listitem").forEach((technology) => {
+      expect(technology).toHaveClass("chip")
     })
   })
 
@@ -50,5 +61,14 @@ describe("localized portfolio sections", () => {
       expect(link).toHaveAttribute("target", "_blank")
       expect(link).toHaveAttribute("rel", "noopener noreferrer")
     }
+  })
+
+  it("renders only the static page background without canvas or injected scroll scripts", () => {
+    const { container } = render(<PortfolioPage content={getPortfolioContent("en")} />)
+
+    expect(container.querySelector("canvas")).not.toBeInTheDocument()
+    expect(container.querySelector(".particle-layer")).not.toBeInTheDocument()
+    expect(container.querySelector(".page-fade")).not.toBeInTheDocument()
+    expect(container.querySelector("#portfolio-scroll-spy")).not.toBeInTheDocument()
   })
 })

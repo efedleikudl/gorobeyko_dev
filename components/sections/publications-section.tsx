@@ -1,3 +1,6 @@
+import { linkVariants } from "@heroui/styles/components/link"
+import { ArrowUpRight } from "lucide-react"
+
 import type { PortfolioContent } from "@/lib/portfolio"
 
 interface PublicationsSectionProps {
@@ -6,6 +9,7 @@ interface PublicationsSectionProps {
 
 export function PublicationsSection({ content }: PublicationsSectionProps) {
   const labels = content.publicationLabels
+  const link = linkVariants()
 
   return (
     <section id="publications" className="content-section" aria-labelledby="publications-heading">
@@ -27,8 +31,16 @@ export function PublicationsSection({ content }: PublicationsSectionProps) {
                   <p className="publication-journal">{publication.journal}</p>
                   <p className="publication-links">
                     {"doi" in publication && publication.doi && (
-                      <a href={publication.doi} target="_blank" rel="noopener noreferrer">
-                        {labels.doi} <span aria-hidden="true">↗</span>
+                      <a
+                        className={link.base()}
+                        href={publication.doi}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {labels.doi}
+                        <span className={link.icon()}>
+                          <ArrowUpRight aria-hidden="true" />
+                        </span>
                         <span className="sr-only"> ({content.ui.externalLink})</span>
                       </a>
                     )}

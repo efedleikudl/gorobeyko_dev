@@ -1,6 +1,4 @@
 import { Navigation } from "@/components/navigation"
-import { ParticleBackground } from "@/components/particle-background"
-import { ScrollSpyScript } from "@/components/scroll-spy-script"
 import { ContactSection } from "@/components/sections/contact-section"
 import { EducationSection } from "@/components/sections/education-section"
 import { ExperienceSection } from "@/components/sections/experience-section"
@@ -22,13 +20,11 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         {content.ui.skipLink}
       </a>
 
-      <ParticleBackground />
       <Navigation
         items={content.navigation}
         labels={content.ui}
         currentLocale={content.locale}
       />
-      <ScrollSpyScript items={content.navigation} />
 
       <main id="main-content" className="site-main" tabIndex={-1}>
         <HeroSection content={content} />
@@ -40,8 +36,6 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         <LanguagesSection content={content} />
         <ContactSection content={content} />
       </main>
-
-      <div className="page-fade" aria-hidden="true" />
     </div>
   )
 }

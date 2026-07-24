@@ -1,3 +1,5 @@
+import { cardVariants } from "@heroui/styles/components/card"
+
 import type { PortfolioContent } from "@/lib/portfolio"
 
 interface SkillsSectionProps {
@@ -5,6 +7,8 @@ interface SkillsSectionProps {
 }
 
 export function SkillsSection({ content }: SkillsSectionProps) {
+  const card = cardVariants({ variant: "transparent" })
+
   return (
     <section id="skills" className="content-section" aria-labelledby="skills-heading">
       <header className="section-heading">
@@ -14,9 +18,13 @@ export function SkillsSection({ content }: SkillsSectionProps) {
 
       <ul className="skills-grid">
         {content.skills.map((skill) => (
-          <li key={skill.id}>
-            <h3>{skill.name}</h3>
-            <p>{skill.description}</p>
+          <li className={`${card.base()} skill-card`} key={skill.id}>
+            <div className={`${card.header()} skill-card-header`}>
+              <h3 className={card.title()}>{skill.name}</h3>
+            </div>
+            <div className={`${card.content()} skill-card-content`}>
+              <p>{skill.description}</p>
+            </div>
           </li>
         ))}
       </ul>

@@ -19,8 +19,10 @@ export function Navigation({ items, labels, currentLocale }: NavigationProps) {
     const sections = items
       .map(({ id }) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null)
+    let animationFrame = 0
 
     function updateActiveSection() {
+      animationFrame = 0
       if (sections.length === 0) return
 
       const activationLine = window.innerHeight * 0.34
@@ -44,9 +46,14 @@ export function Navigation({ items, labels, currentLocale }: NavigationProps) {
       })
     }
 
+    function scheduleUpdate() {
+      if (animationFrame !== 0) return
+      animationFrame = window.requestAnimationFrame(updateActiveSection)
+    }
+
     const observer =
       "IntersectionObserver" in window
-        ? new IntersectionObserver(updateActiveSection, {
+        ? new IntersectionObserver(scheduleUpdate, {
             rootMargin: "-34% 0px -65%",
             threshold: 0,
           })
@@ -54,25 +61,30 @@ export function Navigation({ items, labels, currentLocale }: NavigationProps) {
 
     updateActiveSection()
     sections.forEach((section) => observer?.observe(section))
-    window.addEventListener("scroll", updateActiveSection, { passive: true })
-    window.addEventListener("resize", updateActiveSection)
-    window.addEventListener("hashchange", updateActiveSection)
-    window.addEventListener("pageshow", updateActiveSection)
-    document.addEventListener("scroll", updateActiveSection, { capture: true, passive: true })
+    document.addEventListener("scroll", scheduleUpdate, { capture: true, passive: true })
+    window.addEventListener("resize", scheduleUpdate)
+    window.addEventListener("hashchange", scheduleUpdate)
+    window.addEventListener("pageshow", scheduleUpdate)
 
     return () => {
+      if (animationFrame !== 0) {
+        window.cancelAnimationFrame(animationFrame)
+      }
       observer?.disconnect()
-      window.removeEventListener("scroll", updateActiveSection)
-      window.removeEventListener("resize", updateActiveSection)
-      window.removeEventListener("hashchange", updateActiveSection)
-      window.removeEventListener("pageshow", updateActiveSection)
-      document.removeEventListener("scroll", updateActiveSection, true)
+      document.removeEventListener("scroll", scheduleUpdate, true)
+      window.removeEventListener("resize", scheduleUpdate)
+      window.removeEventListener("hashchange", scheduleUpdate)
+      window.removeEventListener("pageshow", scheduleUpdate)
     }
   }, [items])
 
   return (
     <>
-      <nav className="side-navigation" aria-label={labels.sectionNavigation}>
+      <nav
+        className="side-navigation"
+        aria-label={labels.sectionNavigation}
+        data-active-section={activeSection}
+      >
         <ol>
           {items.map(({ id, label }, index) => {
             const isActive = activeSection === id

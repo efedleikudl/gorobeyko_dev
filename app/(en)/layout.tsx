@@ -11,12 +11,12 @@ export const metadata: Metadata = getLocalizedMetadata("en")
 
 export const viewport: Viewport = {
   colorScheme: "dark",
-  themeColor: "#111111",
+  themeColor: "#0b0e0c",
 }
 
 export default function EnglishRootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" data-theme="portfolio">
       <body className={GeistSans.className}>
         <script
           type="application/ld+json"

@@ -1,3 +1,5 @@
+import { MapPin } from "lucide-react"
+
 import type { PortfolioContent } from "@/lib/portfolio"
 
 interface ExperienceSectionProps {
@@ -20,7 +22,12 @@ export function ExperienceSection({ content }: ExperienceSectionProps) {
               <div className="timeline-content">
                 <h3>{job.title}</h3>
                 <p className="organization">{job.company}</p>
-                {job.location && <p className="location">{job.location}</p>}
+                {job.location && (
+                  <p className="location">
+                    <MapPin aria-hidden="true" />
+                    {job.location}
+                  </p>
+                )}
                 {job.description && <p className="item-description">{job.description}</p>}
                 {job.achievements.length > 0 && (
                   <ul className="achievement-list">

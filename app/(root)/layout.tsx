@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: "dark",
-  themeColor: "#111111",
+  themeColor: "#0b0e0c",
 }
 
 export default function LanguageRedirectLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" data-theme="portfolio">
       <body className={GeistSans.className}>{children}</body>
     </html>
   )

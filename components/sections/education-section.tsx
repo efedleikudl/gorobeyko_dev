@@ -1,3 +1,5 @@
+import { MapPin } from "lucide-react"
+
 import type { PortfolioContent } from "@/lib/portfolio"
 
 interface EducationSectionProps {
@@ -20,7 +22,10 @@ export function EducationSection({ content }: EducationSectionProps) {
               <div className="timeline-content">
                 <h3>{item.degree}</h3>
                 <p className="organization">{item.institution}</p>
-                <p className="location">{item.location}</p>
+                <p className="location">
+                  <MapPin aria-hidden="true" />
+                  {item.location}
+                </p>
                 {"thesis" in item && item.thesis && <p className="item-description">{item.thesis}</p>}
               </div>
             </article>
