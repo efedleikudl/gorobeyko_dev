@@ -459,6 +459,7 @@ section {
 }
 
 .primary-action.button {
+  color: var(--accent-foreground);
   box-shadow: 0 0.65rem 2.2rem rgb(var(--accent-rgb) / 8%);
 }
 
