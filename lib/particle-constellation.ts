@@ -41,11 +41,14 @@ export function createParticleOptions(isNarrow: boolean) {
           // The elastic half: once the cursor leaves, each particle eases back
           // to the exact spot it held in the logo and snaps home within 0.5px.
           // Without this the mask never reforms after a repulse.
+          // follow:false pins the restore target to the fixed anchor captured on
+          // first contact — otherwise the target drifts and the logo never fully
+          // reforms.
           restore: {
             enable: true,
             delay: 0,
             speed: isNarrow ? 0.12 : 0.14,
-            follow: true,
+            follow: false,
           },
         },
       },
@@ -62,13 +65,14 @@ export function createParticleOptions(isNarrow: boolean) {
         width: 0.7,
       },
       move: {
+        // Kept enabled (so the spatial grid the repulse relies on refreshes each
+        // frame) but at zero speed: particles never drift, so the logo holds its
+        // exact shape indefinitely. All real motion comes from the repulse +
+        // restore; the opacity twinkle below supplies the ambient life.
         enable: true,
         outModes: { default: "bounce" },
-        // Barely-there random shimmer keeps the figure alive without letting it
-        // wander — the logo reads as rigid, and the repulse restore owns all the
-        // real motion.
-        random: true,
-        speed: isNarrow ? 0.05 : 0.06,
+        random: false,
+        speed: 0,
       },
       number: {
         density: { enable: false },
@@ -85,6 +89,16 @@ export function createParticleOptions(isNarrow: boolean) {
       shape: { type: "circle" },
       size: {
         value: { min: 0.9, max: 1.9 },
+        // Gentle radius "breathing" — each particle pulses between min and max on
+        // its own random phase. This is the ambient life, achieved without any
+        // positional movement so the logo stays perfectly rigid.
+        animation: {
+          enable: true,
+          speed: 0.8,
+          sync: false,
+          mode: "auto",
+          startValue: "random",
+        },
       },
     },
     polygon: {

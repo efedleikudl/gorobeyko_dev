@@ -44,11 +44,12 @@ describe("particle constellation", () => {
 
     expect(options.interactivity.modes.repulse.restore).toMatchObject({
       enable: true,
-      follow: true,
+      // Pinned target (not following drift) so the outline reforms exactly.
+      follow: false,
     })
     expect(options.interactivity.modes.repulse.restore.speed).toBeGreaterThan(0)
-    // A near-still ambient drift lets the figure hold its shape rigidly.
-    expect(options.particles.move.speed).toBeLessThanOrEqual(0.1)
+    // Zero ambient drift keeps the figure perfectly rigid between interactions.
+    expect(options.particles.move.speed).toBe(0)
   })
 
   it("reduces particle work and displacement on narrow screens", () => {
