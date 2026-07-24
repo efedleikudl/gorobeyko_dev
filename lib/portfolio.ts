@@ -85,6 +85,7 @@ export const sharedPortfolio = {
       company: "cloudopserve GmbH",
       start: "11/2025",
       end: null,
+      location: "coburg",
     },
     noris: {
       company: "Noris Network AG",

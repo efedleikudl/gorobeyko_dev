@@ -65,7 +65,7 @@ describe("portfolio content", () => {
         expect.stringContaining("JS7 JobScheduler"),
       ]),
     )
-    expect(role.location).toBeUndefined()
+    expect(role.location).toBe("Coburg, Germany")
   })
 
   it("publishes the revised DevOps skill set in both languages", () => {
