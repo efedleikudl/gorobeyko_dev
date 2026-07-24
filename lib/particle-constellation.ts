@@ -46,8 +46,8 @@ export function createParticleOptions(isNarrow: boolean) {
           // reforms.
           restore: {
             enable: true,
-            delay: 0,
-            speed: isNarrow ? 0.12 : 0.14,
+            delay: 0.2,
+            speed: isNarrow ? 0.035 : 0.03,
             follow: false,
           },
         },
@@ -61,7 +61,7 @@ export function createParticleOptions(isNarrow: boolean) {
         color: "#b9f7d0",
         distance: isNarrow ? 22 : 30,
         enable: true,
-        opacity: 0.1,
+        opacity: 0.13,
         width: 0.7,
       },
       move: {
@@ -79,7 +79,7 @@ export function createParticleOptions(isNarrow: boolean) {
         value: isNarrow ? 118 : 178,
       },
       opacity: {
-        value: { min: 0.16, max: 0.46 },
+        value: { min: 0.2, max: 0.54 },
         animation: {
           enable: true,
           speed: 0.35,
@@ -88,7 +88,7 @@ export function createParticleOptions(isNarrow: boolean) {
       },
       shape: { type: "circle" },
       size: {
-        value: { min: 0.9, max: 1.9 },
+        value: { min: 1, max: 2 },
         // Gentle radius "breathing" — each particle pulses between min and max on
         // its own random phase. This is the ambient life, achieved without any
         // positional movement so the logo stays perfectly rigid.
