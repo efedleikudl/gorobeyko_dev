@@ -1,3 +1,5 @@
+import Script from "next/script"
+
 const languageRedirect = `
   (() => {
     const primaryLanguage = navigator.languages?.[0] || navigator.language || "en";
@@ -13,7 +15,11 @@ const languageRedirect = `
 export default function LanguageRedirectPage() {
   return (
     <main className="language-redirect">
-      <script dangerouslySetInnerHTML={{ __html: languageRedirect }} />
+      <Script
+        id="language-redirect"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: languageRedirect }}
+      />
       <div>
         <p>Choose a language / Sprache wählen</p>
         <div className="language-redirect-links">

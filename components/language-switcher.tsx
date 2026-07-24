@@ -12,7 +12,8 @@ const languages = [
 
 export function LanguageSwitcher({ currentLocale, className = "" }: LanguageSwitcherProps) {
   return (
-    <div className={`language-switcher ${className}`.trim()} role="group" aria-label="Language / Sprache">
+    <fieldset className={`language-switcher ${className}`.trim()}>
+      <legend className="sr-only">Language / Sprache</legend>
       {languages.map(({ code, label, name }) => (
         <a
           key={code}
@@ -25,6 +26,6 @@ export function LanguageSwitcher({ currentLocale, className = "" }: LanguageSwit
           {label}
         </a>
       ))}
-    </div>
+    </fieldset>
   )
 }

@@ -204,15 +204,31 @@ a {
   text-align: center;
 }
 
-.command-palette-backdrop {
+.command-palette-dialog {
   position: fixed;
   z-index: 60;
   inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  padding: clamp(0.75rem, 4vw, 2rem);
+  margin: 0;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+}
+
+.command-palette-dialog[open] {
   display: grid;
   padding: clamp(0.75rem, 4vw, 2rem);
+  place-items: start center;
+}
+
+.command-palette-dialog::backdrop {
   background: rgb(2 5 3 / 76%);
   backdrop-filter: blur(8px);
-  place-items: start center;
   animation: palette-backdrop-enter 140ms ease both;
 }
 
@@ -512,7 +528,9 @@ a {
   display: inline-grid;
   grid-template-columns: repeat(2, minmax(2.4rem, 1fr));
   gap: 0.2rem;
+  min-inline-size: 0;
   padding: 0.2rem;
+  margin: 0;
   border: 1px solid var(--control-border);
   border-radius: 0.5rem;
   background: rgb(11 14 12 / 82%);
@@ -860,8 +878,9 @@ section {
   padding: 1rem;
 }
 
-.hero-aside > [role="separator"] {
+.hero-aside > hr {
   margin-inline: 1rem;
+  border: 0;
 }
 
 .current-position-heading {
@@ -1125,6 +1144,7 @@ section {
 
 .project-card-separator {
   margin-block: 1.35rem;
+  border: 0;
 }
 
 .project-card-footer.card__footer {

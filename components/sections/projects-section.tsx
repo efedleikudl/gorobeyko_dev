@@ -45,7 +45,7 @@ export function ProjectsSection({ content }: ProjectsSectionProps) {
               </ul>
             </div>
 
-            <div className={`${separator} project-card-separator`} role="separator" />
+            <hr className={`${separator} project-card-separator`} />
 
             <footer className={`${card.footer()} project-card-footer`}>
               {"github" in project && project.github && (

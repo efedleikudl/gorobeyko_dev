@@ -5,7 +5,7 @@ import {
 } from "@tsparticles/plugin-polygon-mask"
 import { describe, expect, it } from "vitest"
 
-import { createParticleOptions } from "@/components/particle-constellation"
+import { createParticleOptions } from "@/lib/particle-constellation"
 
 describe("particle constellation", () => {
   it("uses an inline mask that repulses and then constrains particles back to the figure", () => {

@@ -71,7 +71,7 @@ export function HeroSection({ content }: HeroSectionProps) {
             </div>
           </div>
 
-          <div className={asideSeparator} role="separator" />
+          <hr className={asideSeparator} />
 
           <div className="focus-strip">
             <p className="eyebrow">{hero.focus}</p>

@@ -610,13 +610,23 @@ function formatPeriod(start: string, end: string | null, present: string) {
   return `${start} – ${end ?? present}`
 }
 
-function formatCertificateDate(date: string, locale: Locale) {
-  return new Intl.DateTimeFormat(locale === "de" ? "de-DE" : "en-US", {
+const certificateDateFormatters = {
+  de: new Intl.DateTimeFormat("de-DE", {
     year: "numeric",
     month: "long",
     day: "numeric",
     timeZone: "UTC",
-  }).format(new Date(`${date}T00:00:00Z`))
+  }),
+  en: new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }),
+} satisfies Record<Locale, Intl.DateTimeFormat>
+
+function formatCertificateDate(date: string, locale: Locale) {
+  return certificateDateFormatters[locale].format(new Date(`${date}T00:00:00Z`))
 }
 
 export function getPortfolioContent(locale: Locale) {
