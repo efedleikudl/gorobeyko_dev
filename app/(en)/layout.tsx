@@ -3,6 +3,8 @@ import type { ReactNode } from "react"
 import { GeistSans } from "geist/font/sans"
 
 import "@/app/globals.css"
+import { AnalyticsTracker } from "@/components/analytics-tracker"
+import { PrivacyBanner } from "@/components/privacy-banner"
 import { UmamiAnalytics } from "@/components/umami-analytics"
 import { getLocalizedMetadata } from "@/lib/metadata"
 import { getPersonStructuredData, serializeStructuredData } from "@/lib/structured-data"
@@ -25,7 +27,9 @@ export default function EnglishRootLayout({ children }: Readonly<{ children: Rea
           }}
         />
         <UmamiAnalytics />
+        <AnalyticsTracker locale="en" />
         {children}
+        <PrivacyBanner locale="en" />
       </body>
     </html>
   )

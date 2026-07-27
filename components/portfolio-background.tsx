@@ -2,12 +2,16 @@
 
 import dynamic from "next/dynamic"
 
-const ParticleConstellation = dynamic(
-  () => import("@/components/particle-constellation").then(
-    (module) => module.ParticleConstellation,
-  ),
-  { ssr: false },
-)
+const loadConstellation = () =>
+  import("@/components/particle-constellation").then((module) => module.ParticleConstellation)
+
+// Start fetching the engine chunk when this module runs, so its download
+// overlaps hydration instead of starting after the island mounts.
+if (typeof window !== "undefined") {
+  void loadConstellation()
+}
+
+const ParticleConstellation = dynamic(loadConstellation, { ssr: false })
 
 export function PortfolioBackground() {
   return (

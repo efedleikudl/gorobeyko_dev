@@ -1805,3 +1805,53 @@ section {
     transition-duration: 0.01ms !important;
   }
 }
+
+.privacy-banner {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem;
+  pointer-events: none;
+}
+
+.privacy-banner-inner {
+  pointer-events: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  width: min(100%, 40rem);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--foreground);
+  background: var(--overlay);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--overlay-shadow);
+}
+
+.privacy-banner-inner p {
+  flex: 1 1 16rem;
+  margin: 0;
+  color: var(--muted);
+}
+
+.privacy-banner-inner button {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.9rem;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--accent-foreground);
+  cursor: pointer;
+  background: var(--accent);
+  border: 0;
+  border-radius: 0.4rem;
+}
+
+.privacy-banner-inner button:hover {
+  background: var(--accent-hover);
+}
