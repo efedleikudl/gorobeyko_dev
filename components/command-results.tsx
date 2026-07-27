@@ -9,7 +9,7 @@ interface CommandResultsProps {
   labels: PortfolioContent["ui"]["commandPalette"]
   externalLinkLabel: string
   onActivate: (index: number) => void
-  onFollow: () => void
+  onFollow: (item: CommandItem) => void
 }
 
 export function CommandResults({
@@ -48,7 +48,7 @@ export function CommandResults({
                   target={item.external ? "_blank" : undefined}
                   rel={item.external ? "noopener noreferrer" : undefined}
                   onMouseEnter={() => onActivate(itemIndex)}
-                  onClick={onFollow}
+                  onClick={() => onFollow(item)}
                 >
                   <span>
                     <code>{item.command}</code>

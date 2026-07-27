@@ -1,9 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { MobileNav } from "@/components/mobile-nav"
+import { track } from "@/lib/analytics"
 import type { Locale, PortfolioContent, SectionId } from "@/lib/portfolio"
 
 interface NavigationProps {
@@ -14,6 +15,16 @@ interface NavigationProps {
 
 export function Navigation({ items, labels, currentLocale }: NavigationProps) {
   const [activeSection, setActiveSection] = useState<SectionId>("intro")
+  const trackedSections = useRef<Set<SectionId>>(new Set())
+
+  useEffect(() => {
+    if (trackedSections.current.has(activeSection)) return
+    trackedSections.current.add(activeSection)
+    track("section_view", {
+      section: activeSection,
+      index: items.findIndex((item) => item.id === activeSection),
+    })
+  }, [activeSection, items])
 
   useEffect(() => {
     const sections = items

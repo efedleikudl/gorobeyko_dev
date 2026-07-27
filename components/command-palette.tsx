@@ -11,7 +11,8 @@ import {
 } from "react"
 
 import { CommandResults } from "@/components/command-results"
-import { createCommandItems, filterCommandItems } from "@/lib/command-palette"
+import { track } from "@/lib/analytics"
+import { type CommandItem, createCommandItems, filterCommandItems } from "@/lib/command-palette"
 import type { PortfolioContent } from "@/lib/portfolio"
 
 interface CommandPaletteProps {
@@ -38,19 +39,28 @@ export function CommandPalette({ content }: CommandPaletteProps) {
     [commands, content.locale, query],
   )
 
-  function openPalette() {
+  function openPalette(source: "shortcut" | "trigger") {
     if (!dialogRef.current?.open) dialogRef.current?.showModal()
     setIsOpen(true)
+    track("command_palette_open", { source })
   }
 
-  function dismissPalette() {
+  function dismissPalette(reason: "escape" | "backdrop" | "close_button" | "shortcut") {
     dialogRef.current?.close()
     setIsOpen(false)
     setQuery("")
     window.requestAnimationFrame(() => triggerRef.current?.focus())
+    track("command_palette_close", { reason })
   }
 
-  function followCommand() {
+  function followCommand(item: CommandItem) {
+    track("command_run", {
+      commandId: item.id,
+      group: item.group,
+      query,
+      queryLength: query.length,
+    })
+    track("command_palette_close", { reason: "follow" })
     dialogRef.current?.close()
     setIsOpen(false)
     setQuery("")
@@ -71,7 +81,7 @@ export function CommandPalette({ content }: CommandPaletteProps) {
     function handleGlobalShortcut(event: KeyboardEvent) {
       if (event.key === "Escape" && isOpen) {
         event.preventDefault()
-        dismissPalette()
+        dismissPalette("escape")
         return
       }
 
@@ -83,9 +93,9 @@ export function CommandPalette({ content }: CommandPaletteProps) {
 
       event.preventDefault()
       if (isOpen) {
-        dismissPalette()
+        dismissPalette("shortcut")
       } else {
-        openPalette()
+        openPalette("shortcut")
       }
     }
 
@@ -123,7 +133,7 @@ export function CommandPalette({ content }: CommandPaletteProps) {
 
   function handleDialogCancel(event: SyntheticEvent<HTMLDialogElement>) {
     event.preventDefault()
-    dismissPalette()
+    dismissPalette("backdrop")
   }
 
   return (
@@ -136,7 +146,7 @@ export function CommandPalette({ content }: CommandPaletteProps) {
         aria-haspopup="dialog"
         aria-controls="command-palette-dialog"
         aria-expanded={isOpen}
-        onClick={openPalette}
+        onClick={() => openPalette("trigger")}
       >
         <span className="command-trigger-prompt" aria-hidden="true">&gt;_</span>
         <span className="command-trigger-label">{labels.trigger}</span>
@@ -161,7 +171,7 @@ export function CommandPalette({ content }: CommandPaletteProps) {
               className="command-palette-close"
               type="button"
               aria-label={labels.close}
-              onClick={dismissPalette}
+              onClick={() => dismissPalette("close_button")}
             >
               <X aria-hidden="true" />
             </button>

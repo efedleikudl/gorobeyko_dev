@@ -1,32 +1,35 @@
-import Script from "next/script"
-
 const languageRedirect = `
-  (() => {
-    const primaryLanguage = navigator.languages?.[0] || navigator.language || "en";
-    const locale = primaryLanguage.toLowerCase().startsWith("de") ? "de" : "en";
-    const basePath = window.location.pathname.endsWith("/")
-      ? window.location.pathname
-      : window.location.pathname + "/";
-
-    window.location.replace(basePath + locale + "/");
+  (function () {
+    try {
+      var langs = navigator.languages
+      var primary = (langs && langs[0]) || navigator.language || "en"
+      var locale = primary.toLowerCase().indexOf("de") === 0 ? "de" : "en"
+      var path = window.location.pathname
+      if (path.charAt(path.length - 1) !== "/") path += "/"
+      window.location.replace(path + locale + "/")
+    } catch (e) {}
   })();
 `
 
 export default function LanguageRedirectPage() {
   return (
-    <main className="language-redirect">
-      <Script
-        id="language-redirect"
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: languageRedirect }}
-      />
-      <div>
-        <p>Choose a language / Sprache wählen</p>
-        <div className="language-redirect-links">
-          <a href="./en/" hrefLang="en" lang="en">English</a>
-          <a href="./de/" hrefLang="de" lang="de">Deutsch</a>
-        </div>
-      </div>
-    </main>
+    <>
+      <script dangerouslySetInnerHTML={{ __html: languageRedirect }} />
+      <noscript>
+        <main className="language-redirect">
+          <div>
+            <p>Choose a language / Sprache wählen</p>
+            <div className="language-redirect-links">
+              <a href="./en/" hrefLang="en" lang="en">
+                English
+              </a>
+              <a href="./de/" hrefLang="de" lang="de">
+                Deutsch
+              </a>
+            </div>
+          </div>
+        </main>
+      </noscript>
+    </>
   )
 }

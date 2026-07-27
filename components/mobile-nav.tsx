@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react"
 import { useState } from "react"
 
 import { LanguageSwitcher } from "@/components/language-switcher"
+import { track } from "@/lib/analytics"
 import type { Locale, PortfolioContent, SectionId } from "@/lib/portfolio"
 
 interface MobileNavProps {
@@ -18,8 +19,13 @@ interface MobileNavProps {
 export function MobileNav({ items, labels, activeSection, currentLocale }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
 
+  function handleOpenChange(open: boolean) {
+    setIsOpen(open)
+    track("mobile_nav_toggle", { open })
+  }
+
   return (
-    <Drawer isOpen={isOpen} onOpenChange={setIsOpen}>
+    <Drawer isOpen={isOpen} onOpenChange={handleOpenChange}>
       <Button
         className="mobile-menu-trigger"
         variant="outline"
