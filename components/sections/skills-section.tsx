@@ -18,7 +18,7 @@ export function SkillsSection({ content }: SkillsSectionProps) {
 
       <ul className="skills-grid">
         {content.skills.map((skill) => (
-          <li className={`${card.base()} skill-card`} key={skill.id}>
+          <li className={`${card.base()} skill-card glass-panel`} key={skill.id}>
             <div className={`${card.header()} skill-card-header`}>
               <h3 className={card.title()}>{skill.name}</h3>
             </div>

@@ -26,6 +26,7 @@
     "@tsparticles/slim": "4.3.2",
     "geist": "1.7.0",
     "lucide-react": "^1.24.0",
+    "motion": "^12.42.2",
     "next": "16.2.11",
     "react": "19.2.5",
     "react-dom": "19.2.5"

@@ -53,7 +53,7 @@ export function HeroSection({ content }: HeroSectionProps) {
           </div>
         </div>
 
-        <aside className="hero-aside" aria-label={hero.currentPosition}>
+        <aside className="hero-aside glass-panel" aria-label={hero.currentPosition}>
           <div className="system-profile-header" aria-hidden="true">
             <span className="system-profile-prompt">&gt;_</span>
             <span>profile.yaml</span>

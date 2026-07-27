@@ -1,6 +1,7 @@
 import { CommandPalette } from "@/components/command-palette"
 import { Navigation } from "@/components/navigation"
 import { PortfolioBackground } from "@/components/portfolio-background"
+import { Reveal } from "@/components/reveal"
 import { CertificatesSection } from "@/components/sections/certificates-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { EducationSection } from "@/components/sections/education-section"
@@ -33,15 +34,33 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
       <CommandPalette content={content} />
 
       <main id="main-content" className="site-main" tabIndex={-1}>
+        {/* The hero animates via CSS on load, so it is intentionally not
+            wrapped — a scroll reveal would fight the entrance animation. */}
         <HeroSection content={content} />
-        <ExperienceSection content={content} />
-        <ProjectsSection content={content} />
-        <SkillsSection content={content} />
-        <EducationSection content={content} />
-        <CertificatesSection content={content} />
-        <PublicationsSection content={content} />
-        <LanguagesSection content={content} />
-        <ContactSection content={content} />
+        <Reveal>
+          <ExperienceSection content={content} />
+        </Reveal>
+        <Reveal>
+          <ProjectsSection content={content} />
+        </Reveal>
+        <Reveal>
+          <SkillsSection content={content} />
+        </Reveal>
+        <Reveal>
+          <EducationSection content={content} />
+        </Reveal>
+        <Reveal>
+          <CertificatesSection content={content} />
+        </Reveal>
+        <Reveal>
+          <PublicationsSection content={content} />
+        </Reveal>
+        <Reveal>
+          <LanguagesSection content={content} />
+        </Reveal>
+        <Reveal>
+          <ContactSection content={content} />
+        </Reveal>
       </main>
     </div>
   )
