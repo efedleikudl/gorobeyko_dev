@@ -250,6 +250,15 @@ a {
   pointer-events: none !important;
 }
 
+.particle-constellation {
+  opacity: 0;
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.particle-constellation-ready {
+  opacity: 1;
+}
+
 .command-palette-trigger {
   position: fixed;
   z-index: 24;
