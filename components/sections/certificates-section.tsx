@@ -22,7 +22,7 @@ export function CertificatesSection({ content }: CertificatesSectionProps) {
       <ul className="certificate-grid">
         {content.certificates.map((certificate) => (
           <li key={certificate.id}>
-            <article className={`${card.base()} certificate-card`}>
+            <article className={`${card.base()} certificate-card glass-panel`}>
               <header className={`${card.header()} certificate-card-header`}>
                 <span className="certificate-mark" aria-hidden="true">
                   <BadgeCheck />

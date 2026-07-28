@@ -25,7 +25,7 @@ export function ProjectsSection({ content }: ProjectsSectionProps) {
 
       <div className="project-grid">
         {content.projects.map((project, index) => (
-          <article className={`${card.base()} project-card`} key={project.id}>
+          <article className={`${card.base()} project-card glass-panel`} key={project.id}>
             <header className={`${card.header()} project-card-header`}>
               <p className="project-index" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}

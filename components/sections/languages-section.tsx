@@ -14,7 +14,7 @@ export function LanguagesSection({ content }: LanguagesSectionProps) {
 
       <ul className="language-grid">
         {content.languages.map((language) => (
-          <li key={language.id}>
+          <li className="glass-panel" key={language.id}>
             <span>{language.name}</span>
             <strong>{language.level}</strong>
           </li>

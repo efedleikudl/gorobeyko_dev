@@ -61,13 +61,13 @@ export function PrivacyBanner({ locale }: PrivacyBannerProps) {
   const t = copy[locale]
 
   return (
-    <div className="privacy-banner" role="region" aria-label={t.label}>
+    <section className="privacy-banner" aria-label={t.label}>
       <div className="privacy-banner-inner">
         <p>{t.text}</p>
         <button type="button" onClick={dismiss}>
           {t.button}
         </button>
       </div>
-    </div>
+    </section>
   )
 }

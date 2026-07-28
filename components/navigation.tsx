@@ -15,11 +15,18 @@ interface NavigationProps {
 
 export function Navigation({ items, labels, currentLocale }: NavigationProps) {
   const [activeSection, setActiveSection] = useState<SectionId>("intro")
-  const trackedSections = useRef<Set<SectionId>>(new Set())
+  const trackedSectionsRef = useRef<Set<SectionId> | null>(null)
+
+  if (trackedSectionsRef.current === null) {
+    trackedSectionsRef.current = new Set<SectionId>()
+  }
 
   useEffect(() => {
-    if (trackedSections.current.has(activeSection)) return
-    trackedSections.current.add(activeSection)
+    const trackedSections = trackedSectionsRef.current
+    if (trackedSections === null) return
+
+    if (trackedSections.has(activeSection)) return
+    trackedSections.add(activeSection)
     track("section_view", {
       section: activeSection,
       index: items.findIndex((item) => item.id === activeSection),
